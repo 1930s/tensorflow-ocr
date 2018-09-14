@@ -1,2 +1,2 @@
 # tensorflow-ocr
-A functional ocr with the deeper learning algorithm tensorflow implemented.
+A functional ocr with the deep learning algorithm tensorflow implemented.
