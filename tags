@@ -1,0 +1,304 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AT	ocr.h	37;"	d
+BIGDIST	ocr.h	57;"	d
+BUCKETSIZE	ocr.h	47;"	d
+CUTOFF	ocr.h	69;"	d
+DIMS	p_kd.c	28;"	d	file:
+DOWN	segment.c	1512;"	d	file:
+DOWNLEFT	segment.c	1518;"	d	file:
+DOWNLEFTLEFT	segment.c	1536;"	d	file:
+DOWNRIGHT	segment.c	1527;"	d	file:
+DOWNRIGHTRIGHT	segment.c	1548;"	d	file:
+FRIBIDI_MASK_NEUTRAL	kd.c	488;"	d	file:
+FRIBIDI_MASK_RTL	kd.c	487;"	d	file:
+GOODHEIGHT	ocr.h	55;"	d
+GOODMATCH	ocr.h	63;"	d
+GOODWIDTH	ocr.h	49;"	d
+GRID	ocr.h	45;"	d
+GUI	gtkDisplay.c	/^void GUI(int col) {$/;"	f
+HEIGHT	segment.c	44;"	d	file:
+INFTY	ocr.h	44;"	d
+ISBLACK	segment.c	1769;"	d	file:
+ISBLANK	segment.c	42;"	d	file:
+ISFILLED	segment.c	43;"	d	file:
+ISMARKED	segment.c	1768;"	d	file:
+LIGHTSUM	ocr.h	66;"	d
+MARK	segment.c	1766;"	d	file:
+MAX	ocr.h	40;"	d
+MAXGLYPHHEIGHT	ocr.h	54;"	d
+MAXGLYPHWIDTH	ocr.h	53;"	d
+MAXSHEAR	ocr.h	59;"	d
+MAXTEMPLATES	template.c	26;"	d	file:
+MAXTREEDEPTH	ocr.h	56;"	d
+MIN	ocr.h	39;"	d
+MINGLYPHHEIGHT	ocr.h	51;"	d
+MINGLYPHWIDTH	ocr.h	52;"	d
+MINMATCH	ocr.h	48;"	d
+MINWIDTH	ocr.h	50;"	d
+OCRFAILS	ocr.h	206;"	d
+PRECISION	ocr.h	58;"	d
+RTL	kd.c	/^int RTL;$/;"	v
+SAYERROR	ocr.h	31;"	d
+SHEARSCALE	ocr.h	67;"	d
+SKIPBLANKCOLS	segment.c	72;"	d	file:
+SKIPBLANKLINES	segment.c	58;"	d	file:
+SKIPNONBLANKCOLS	segment.c	79;"	d	file:
+SKIPNONBLANKLINES	segment.c	65;"	d	file:
+SLANT	ocr.h	68;"	d
+SOMEDARK	segment.c	352;"	d	file:
+SPACEFRACTION	ocr.h	62;"	d
+SPLITGAP	segment.c	23;"	d	file:
+SPLITTABLE	ocr.h	64;"	d
+TUPLELENGTH	ocr.h	46;"	d
+UNMARK	segment.c	1767;"	d	file:
+VERSION	ocr.h	25;"	d
+VERYBIG	p_kd.c	27;"	d	file:
+acceptInformation	gtkDisplay.c	/^gboolean acceptInformation(GtkWidget *viewport, GdkEventButton *event,$/;"	f
+acceptValue	gtkDisplay.c	/^gboolean acceptValue(GtkEntry *newValueWidget, gpointer data) {$/;"	f
+adjustLineStats	segment.c	/^void adjustLineStats(textLine *aLine) {$/;"	f
+adjustPath	segment.c	/^int *adjustPath(int *oldPath, int oldHeight, int stretchAbove,$/;"	f
+aligned	gtkDisplay.c	/^GtkWidget *aligned = NULL;$/;"	v
+alwaysCombine	main.c	/^int alwaysCombine = false;$/;"	v
+anotherPage	readPicture.c	/^int anotherPage() {$/;"	f
+averageLineHeight	segment.c	/^float averageLineHeight;$/;"	v
+ballOverlapBounds	kd.c	/^static int ballOverlapBounds(tuple_t probe, kd_node_t *treeNode,$/;"	f	file:
+ballOverlapBounds	p_kd.c	/^static int ballOverlapBounds(p_tuple_t probe, p_kd_node_t *treeNode,$/;"	f	file:
+ballWithinBounds	kd.c	/^static int ballWithinBounds(tuple_t probe, kd_node_t *treeNode,$/;"	f	file:
+ballWithinBounds	p_kd.c	/^static int ballWithinBounds(p_tuple_t probe, p_kd_node_t *treeNode,$/;"	f	file:
+blueStyle	gtkDisplay.c	/^GtkStyle *redStyle, *greenStyle, *blueStyle, *yellowStyle;$/;"	v
+bottom	ocr.h	/^	int bottom; \/\/ row following the bottom of the text line (same as in$/;"	m	struct:glyph_s
+bottom	ocr.h	/^	int bottom; \/\/ row following the bottom of the text line$/;"	m	struct:__anon1
+bucket	ocr.h	/^	bucket_t *bucket;$/;"	m	struct:kd_node_s
+bucket	ocr.h	/^	p_bucket_t *bucket;$/;"	m	struct:p_kd_node_s
+bucket_t	ocr.h	/^} bucket_t;$/;"	t	typeref:struct:__anon2
+buildBucket	kd.c	/^kd_node_t *buildBucket(bucket_t *oldBucket, int startIndex, int endIndex,$/;"	f
+buildBucket	p_kd.c	/^static p_kd_node_t *buildBucket($/;"	f	file:
+buildEmptyTree	kd.c	/^kd_node_t *buildEmptyTree() {$/;"	f
+buildSlantedPath	segment.c	/^int *buildSlantedPath(glyph_t *glyph, int xStartIndex) {$/;"	f
+buildTreeFromData	kd.c	/^static kd_node_t *buildTreeFromData(tuple_t *key, const char **values,$/;"	f	file:
+buildTuples	categorize.c	/^void buildTuples() {$/;"	f
+calculateDistance	categorize.c	/^void calculateDistance(glyph_t *glyphPtr) {$/;"	f
+categorization	kd.c	/^kd_node_t *categorization; \/\/ the root$/;"	v
+closestMatch	kd.c	/^float closestMatch(kd_node_t *tree, tuple_t probe, bucket_t **bucket,$/;"	f
+collectText	gtkDisplay.c	/^static int collectText(glyph_t *glyphPtr, char *buffer, int lengthAvailable) {$/;"	f	file:
+columns	main.c	/^int columns = 1;$/;"	v
+combineGlyphs	segment.c	/^glyph_t *combineGlyphs($/;"	f
+combineLines	segment.c	/^lineHeaderList *combineLines(lineHeaderList *curLine) { \/\/ combine with next.$/;"	f
+combineLinesOld	segment.c	/^lineHeaderList *combineLinesOld(lineHeaderList *curLine) { \/\/ combine with next.$/;"	f
+computeBorders	segment.c	/^void computeBorders(int column) {$/;"	f
+copyGlyph	segment.c	/^void copyGlyph(glyph_t *glyphPtr, lineHeaderList *theLineList) {$/;"	f
+copyPath	segment.c	/^int *copyPath(int *path, int height) {$/;"	f
+copyTuple	categorize.c	/^tuple_t copyTuple(tuple_t old) {$/;"	f
+count	ocr.h	/^	int count;$/;"	m	struct:__anon2
+count	ocr.h	/^	int count;$/;"	m	struct:__anon3
+countBits	segment.c	/^static int countBits(int topRow, int bottomRow, int col) {$/;"	f	file:
+countLight	readPicture.c	/^int countLight(int shear) { \/\/ how many light lines at this shear?$/;"	f
+countNonBlankCol	segment.c	/^static int countNonBlankCol(int topRow, int bottomRow, int col) {$/;"	f	file:
+curGlyph	gtkDisplay.c	/^static glyph_t *curGlyph;$/;"	v	file:
+cutoff	main.c	/^float cutoff = CUTOFF; \/\/ histogram cutoff; smaller means more white space$/;"	v
+dimension	ocr.h	/^	int dimension;$/;"	m	struct:kd_node_s
+dimension	ocr.h	/^	int dimension;$/;"	m	struct:p_kd_node_s
+discriminant	ocr.h	/^	float discriminant;$/;"	m	struct:kd_node_s
+discriminant	ocr.h	/^	float discriminant;$/;"	m	struct:p_kd_node_s
+displayText	gtkDisplay.c	/^void displayText(void *theButton, int *visual) { \/\/ from signal$/;"	f
+distSquared	kd.c	/^static float distSquared(tuple_t tuple1, tuple_t tuple2) {$/;"	f	file:
+distSquared	p_kd.c	/^static float distSquared(p_tuple_t tuple1, p_tuple_t tuple2) {$/;"	f	file:
+distance	ocr.h	/^	float distance; \/\/ closest distance to known glyph, or -1 if uninitialized$/;"	m	struct:glyph_s
+doExit	gtkDisplay.c	/^void doExit() {$/;"	f
+end	ocr.h	/^	glyph_t *end; \/\/ the last glyph; points to dummy if none.$/;"	m	struct:__anon1
+evaluatePathSplit	segment.c	/^float evaluatePathSplit(glyph_t *glyphPtr, glyph_t *first, int *splitPath) {$/;"	f
+false	ocr.h	60;"	d
+fileBase	readPicture.c	/^const char *fileBase = 0; \/\/ file name of picture (just the base part)$/;"	v
+fillTuple	categorize.c	/^void fillTuple(glyph_t *glyph, tuple_t tuple) {$/;"	f
+findCells	segment.c	/^void findCells(top, bottom, left, right) {$/;"	f
+findLines	segment.c	/^int findLines(int column) { \/\/ returns Boolean for success$/;"	f
+findLinesHarder	segment.c	/^void findLinesHarder(int top, int bottom, int left, int right)  {$/;"	f
+finishPathSplit	segment.c	/^void finishPathSplit(glyph_t *glyphPtr, glyph_t *first, int *splitPath) {$/;"	f
+firstDisplay	gtkDisplay.c	/^static int firstDisplay = 1;  \/\/ reset to 0 after building the GUI$/;"	v	file:
+flood	segment.c	/^int flood(glyph_t *answer, int row, int col) {$/;"	f
+floodFindGlyphs	segment.c	/^int floodFindGlyphs(int column) {$/;"	f
+floodRecur	segment.c	/^void floodRecur(glyph_t *theGlyph, int row, int col, int topRow) {$/;"	f
+fontFile	readPicture.c	/^const char *fontFile = 0; \/\/ file name of font data$/;"	v
+freeGlyph	segment.c	/^void freeGlyph(glyph_t *glyphPtr) {$/;"	f
+freeLines	segment.c	/^void freeLines() {$/;"	f
+freeTree	kd.c	/^void freeTree(kd_node_t *tree) {$/;"	f
+gdkPixbuf	gtkDisplay.c	/^GdkPixbuf *gdkPixbuf = NULL;$/;"	v
+getBucket	kd.c	/^void getBucket(tuple_t tuple, bucket_t **bucket, int *index) {$/;"	f
+glyphAtX	segment.c	/^glyph_t *glyphAtX(textLine *theLine, int row, int col, int verbose) {$/;"	f
+glyphAtXY	segment.c	/^glyph_t *glyphAtXY(int col, int row, int verbose) {$/;"	f
+glyphCount	segment.c	/^int totalWidth = 0, totalHeight = 0, glyphCount = 0;$/;"	v
+glyphHeight	segment.c	/^int leftMargin, rightMargin, glyphWidth, glyphHeight;$/;"	v
+glyphWidth	segment.c	/^int leftMargin, rightMargin, glyphWidth, glyphHeight;$/;"	v
+glyph_s	ocr.h	/^typedef struct glyph_s {$/;"	s
+glyph_t	ocr.h	/^} glyph_t;$/;"	t	typeref:struct:glyph_s
+glyphs	ocr.h	/^	const glyph_t *glyphs[BUCKETSIZE]; \/\/ for each tuple, if known.$/;"	m	struct:__anon3
+glyphs	ocr.h	/^	glyph_t *glyphs; \/\/ there is a dummy at the start$/;"	m	struct:__anon1
+goodMatch	main.c	/^float goodMatch = GOODMATCH;$/;"	v
+goodMatch2	main.c	/^float goodMatch2 = GOODMATCH*GOODMATCH;$/;"	v
+greenStyle	gtkDisplay.c	/^GtkStyle *redStyle, *greenStyle, *blueStyle, *yellowStyle;$/;"	v
+hasRTL	kd.c	/^int hasRTL (const char *data) {$/;"	f
+header	segment.c	/^int header, spacer, lineWidth;$/;"	v
+height	readPicture.c	/^tsize_t width, height;$/;"	v
+highBounds	ocr.h	/^	p_tuple_t lowBounds, highBounds;$/;"	m	struct:p_kd_node_s
+highBounds	ocr.h	/^	tuple_t lowBounds, highBounds;$/;"	m	struct:kd_node_s
+ignoreVertical	main.c	/^int ignoreVertical = 0;$/;"	v
+image	readPicture.c	/^char *image;$/;"	v
+infoGuessValue	gtkDisplay.c	/^static GtkWidget *infoGuessValue = NULL; \/\/ GtkLabel$/;"	v	file:
+infoLayout	gtkDisplay.c	/^GtkLayout *infoLayout = NULL;$/;"	v
+infoNewValue	gtkDisplay.c	/^static GtkWidget *infoNewValue = NULL; \/\/ GtkEntry$/;"	v	file:
+insertGlyph	segment.c	/^glyph_t *insertGlyph(int left, int right, int top, int bottom, lineHeaderList *theLineList) {$/;"	f
+insertTuple	kd.c	/^void insertTuple(kd_node_t *tree, tuple_t tuple, char *values) {$/;"	f
+isBlankCol	segment.c	/^static int isBlankCol(int topRow, int bottomRow, int col) {$/;"	f	file:
+isBlankRow	segment.c	/^static int isBlankRow(row, startCol, endCol) {$/;"	f	file:
+kd_node_s	ocr.h	/^typedef struct kd_node_s {$/;"	s
+kd_node_t	ocr.h	/^} kd_node_t;$/;"	t	typeref:struct:kd_node_s
+key	ocr.h	/^	p_tuple_t key[BUCKETSIZE];$/;"	m	struct:__anon3
+key	ocr.h	/^	tuple_t key[BUCKETSIZE];$/;"	m	struct:__anon2
+layout	p_kd.c	/^static p_kd_node_t *layout = NULL; \/\/ the root$/;"	v	file:
+left	ocr.h	/^	int left; \/\/ column of the left of the glyph$/;"	m	struct:glyph_s
+left	ocr.h	/^	struct kd_node_s *left, *right;$/;"	m	struct:kd_node_s	typeref:struct:kd_node_s::kd_node_s
+left	ocr.h	/^	struct p_kd_node_s *left, *right;$/;"	m	struct:p_kd_node_s	typeref:struct:p_kd_node_s::p_kd_node_s
+leftBorder	ocr.h	/^	int leftBorder, rightBorder;$/;"	m	struct:__anon1
+leftBorder	segment.c	/^int leftBorder, rightBorder; \/\/ saved between calls to findLines$/;"	v
+leftMargin	segment.c	/^int leftMargin, rightMargin, glyphWidth, glyphHeight;$/;"	v
+leftPath	ocr.h	/^	int *leftPath, *rightPath; \/\/ if not null: a non-vertical delimiting path$/;"	m	struct:glyph_s
+line	ocr.h	/^	textLine *line;$/;"	m	struct:lineHeaderStruct
+lineHeaderList	ocr.h	/^} lineHeaderList;$/;"	t	typeref:struct:lineHeaderStruct
+lineHeaderStruct	ocr.h	/^typedef struct lineHeaderStruct {$/;"	s
+lineHeaders	segment.c	/^lineHeaderList *lineHeaders; \/\/ with a dummy at the front$/;"	v
+lineHeight	ocr.h	/^	int lineHeight; \/\/ height of the line in which this glyph appears$/;"	m	struct:glyph_s
+lineWidth	segment.c	/^int header, spacer, lineWidth;$/;"	v
+lowBounds	ocr.h	/^	p_tuple_t lowBounds, highBounds;$/;"	m	struct:p_kd_node_s
+lowBounds	ocr.h	/^	tuple_t lowBounds, highBounds;$/;"	m	struct:kd_node_s
+main	main.c	/^int main (int argc, char * const argv[]) {$/;"	f
+mainBox	gtkDisplay.c	/^GtkWidget *mainBox = NULL;$/;"	v
+mainWindow	gtkDisplay.c	/^GtkWidget *mainWindow = NULL;$/;"	v
+maxGlyphHeight	main.c	/^int maxGlyphHeight = MAXGLYPHHEIGHT;$/;"	v
+maxGlyphWidth	main.c	/^int maxGlyphWidth = MAXGLYPHWIDTH;$/;"	v
+maxSpreadDimension	kd.c	/^int maxSpreadDimension(tuple_t *key, int count) {$/;"	f
+maxSpreadDimension	p_kd.c	/^static int maxSpreadDimension(p_tuple_t *key, int count) {$/;"	f	file:
+mayCombine	main.c	/^int mayCombine = 1;$/;"	v
+median	kd.c	/^static int median(tuple_t *key, const char **values,$/;"	f	file:
+median	p_kd.c	/^static int median(p_tuple_t *key, const glyph_t **glyphs,$/;"	f	file:
+minGlyphArea	main.c	/^int minGlyphArea = 1;$/;"	v
+minGlyphHeight	main.c	/^int minGlyphHeight = MINGLYPHHEIGHT;$/;"	v
+minGlyphWidth	main.c	/^int minGlyphWidth = MINGLYPHWIDTH;$/;"	v
+minMatch	main.c	/^float minMatch = MINMATCH;$/;"	v
+minMatch2	main.c	/^float minMatch2 = MINMATCH*MINMATCH;$/;"	v
+myTiff	readPicture.c	/^TIFF* myTiff = NULL;$/;"	v
+narrowGlyph	segment.c	/^void narrowGlyph(glyph_t *glyph) {$/;"	f
+narrowGlyphs	segment.c	/^void narrowGlyphs() {$/;"	f
+newLineHeader	segment.c	/^lineHeaderList *newLineHeader() {$/;"	f
+newTuple	categorize.c	/^tuple_t newTuple() {$/;"	f
+next	ocr.h	/^	struct glyph_s *next;$/;"	m	struct:glyph_s	typeref:struct:glyph_s::glyph_s
+next	ocr.h	/^	struct lineHeaderStruct *next;$/;"	m	struct:lineHeaderStruct	typeref:struct:lineHeaderStruct::lineHeaderStruct
+noShear	main.c	/^int noShear = 0;$/;"	v
+normalizeTuple	kd.c	/^void normalizeTuple(tuple_t tuple) {$/;"	f
+numLines	segment.c	/^int numLines;$/;"	v
+oScrollFraction	gtkDisplay.c	/^static float oScrollFraction = -1.0; \/\/ negative means not in use$/;"	v	file:
+ocrDistance2	kd.c	/^float ocrDistance2(tuple_t tuple) { \/\/ returns square of distance$/;"	f
+ocrValue	kd.c	/^const char *ocrValue(tuple_t tuple) {$/;"	f
+oscroll	gtkDisplay.c	/^static GtkObject *oscroll; \/\/ ocr scroller$/;"	v	file:
+outTree	kd.c	/^static void outTree(kd_node_t *tree, FILE *outFile) {$/;"	f	file:
+overWrite	segment.c	/^void overWrite(glyph_t *old, glyph_t *new) {$/;"	f
+overlapHorizontal	segment.c	/^int overlapHorizontal(glyph_t *first, glyph_t *second) {$/;"	f
+overlapVertical	segment.c	/^int overlapVertical(lineHeaderList *first, lineHeaderList *second) {$/;"	f
+p_bucket_t	ocr.h	/^} p_bucket_t;$/;"	t	typeref:struct:__anon3
+p_buildEmptyTree	p_kd.c	/^p_kd_node_t *p_buildEmptyTree() {$/;"	f
+p_closestGlyph	p_kd.c	/^float p_closestGlyph(const glyph_t *theGlyph, const glyph_t **closestGlyph) {$/;"	f
+p_closestMatch	p_kd.c	/^float p_closestMatch(p_kd_node_t *tree, p_tuple_t probe, p_bucket_t **bucket,$/;"	f
+p_copyTuple	p_kd.c	/^static p_tuple_t p_copyTuple(p_tuple_t old) {$/;"	f	file:
+p_distance	p_kd.c	/^float p_distance(p_tuple_t tuple) {$/;"	f
+p_freeTree	p_kd.c	/^void p_freeTree(p_kd_node_t *tree) {$/;"	f
+p_getBucket	p_kd.c	/^void p_getBucket(p_tuple_t tuple, p_bucket_t **bucket, int *index) {$/;"	f
+p_init	p_kd.c	/^void p_init() {$/;"	f
+p_insertGlyph	p_kd.c	/^void p_insertGlyph(const glyph_t *theGlyph) {$/;"	f
+p_insertTuple	p_kd.c	/^void p_insertTuple(p_kd_node_t *tree, p_tuple_t tuple, const glyph_t *theGlyph) {$/;"	f
+p_kd_node_s	ocr.h	/^typedef struct p_kd_node_s {$/;"	s
+p_kd_node_t	ocr.h	/^} p_kd_node_t;$/;"	t	typeref:struct:p_kd_node_s
+p_newTuple	p_kd.c	/^p_tuple_t p_newTuple(float x, float y) {$/;"	f
+p_printBucket	p_kd.c	/^static void p_printBucket($/;"	f	file:
+p_printTree	p_kd.c	/^void p_printTree(p_kd_node_t *tree, int dimension, const char *message, $/;"	f
+p_printTuple	p_kd.c	/^void p_printTuple(p_tuple_t tuple, int specialDimension) {$/;"	f
+p_tuple_t	ocr.h	/^typedef float *p_tuple_t; \/\/ points to an array of length DIMS$/;"	t
+paintGlyphRectangles	gtkDisplay.c	/^gboolean paintGlyphRectangles(GtkWidget *picWin, gpointer func_data) {$/;"	f
+partition	kd.c	/^static int partition(tuple_t *key, const char **values, int dimension,$/;"	f	file:
+partition	p_kd.c	/^static int partition(p_tuple_t *key, const glyph_t **glyphs, int dimension,$/;"	f	file:
+picScroller	gtkDisplay.c	/^GtkWidget *picScroller = NULL;$/;"	v
+picViewport	gtkDisplay.c	/^GtkWidget *picViewport = NULL;$/;"	v
+printBucket	kd.c	/^void printBucket(bucket_t *bucket, int dimension, const char *message) {$/;"	f
+printGlyphs	display.c	/^void printGlyphs() {$/;"	f
+printRaster	display.c	/^void printRaster() {$/;"	f
+printRegion	display.c	/^void printRegion(int top, int bottom, int left, int right) {$/;"	f
+printTree	kd.c	/^void printTree(kd_node_t *tree, int dimension, const char *message, $/;"	f
+printTuple	kd.c	/^void printTuple(tuple_t tuple, int specialDimension) {$/;"	f
+pscroll	gtkDisplay.c	/^static GtkObject *pscroll; \/\/ picture scroller$/;"	v	file:
+quickSort	kd.c	/^static void quickSort(tuple_t *key, const char **values,$/;"	f	file:
+quickSort	p_kd.c	/^static void quickSort(p_tuple_t *key, const glyph_t **glyphs,$/;"	f	file:
+raster	ocr.h	/^	uint32 *raster;$/;"	v
+raster	readPicture.c	/^uint32 *raster = NULL;$/;"	v
+readPicture	readPicture.c	/^void readPicture() {$/;"	f
+readTemplate	template.c	/^void readTemplate() {$/;"	f
+readTraining	training.c	/^void readTraining() {$/;"	f
+readTuples	kd.c	/^void readTuples() {$/;"	f
+redStyle	gtkDisplay.c	/^GtkStyle *redStyle, *greenStyle, *blueStyle, *yellowStyle;$/;"	v
+redo	gtkDisplay.c	/^int redo;$/;"	v
+redoColumn	gtkDisplay.c	/^void redoColumn() {$/;"	f
+refillLine	segment.c	/^void refillLine(lineHeaderList *aLineHeader) {$/;"	f
+refillTuple	categorize.c	/^void refillTuple(glyph_t *glyph, tuple_t tuple) {$/;"	f
+right	ocr.h	/^	int right; \/\/ column following the right of the glyph$/;"	m	struct:glyph_s
+right	ocr.h	/^	struct kd_node_s *left, *right;$/;"	m	struct:kd_node_s	typeref:struct:kd_node_s::
+right	ocr.h	/^	struct p_kd_node_s *left, *right;$/;"	m	struct:p_kd_node_s	typeref:struct:p_kd_node_s::
+rightBorder	ocr.h	/^	int leftBorder, rightBorder;$/;"	m	struct:__anon1
+rightBorder	segment.c	/^int leftBorder, rightBorder; \/\/ saved between calls to findLines$/;"	v
+rightMargin	segment.c	/^int leftMargin, rightMargin, glyphWidth, glyphHeight;$/;"	v
+rightPath	ocr.h	/^	int *leftPath, *rightPath; \/\/ if not null: a non-vertical delimiting path$/;"	m	struct:glyph_s
+scanAbout	segment.c	/^int scanAbout(int row, int left, int right) {$/;"	f
+scrollChanged	gtkDisplay.c	/^void scrollChanged(GtkAdjustment *scrollAdjustment, gpointer dummy) {$/;"	f
+setCategory	categorize.c	/^void setCategory(glyph_t *glyph, char *value) {$/;"	f
+shearPicture	readPicture.c	/^void shearPicture() {$/;"	f
+shiftRight	segment.c	/^void shiftRight(int *path, int height) { \/\/ move one right$/;"	f
+showGlyphs	segment.c	/^void showGlyphs(textLine *theLine, const char *msg) { \/\/ debugging output$/;"	f
+showLines	segment.c	/^void showLines(lineHeaderList *theLines) { \/\/ debugging output$/;"	f
+showText	gtkDisplay.c	/^void showText() { \/\/ called from a button; ignore any parameters$/;"	f
+simpleTest	main.c	/^void simpleTest() {$/;"	f
+slant	main.c	/^float slant = SLANT; \/\/ Δx = Δy\/slant$/;"	v
+spaceFraction	main.c	/^float spaceFraction = SPACEFRACTION;$/;"	v
+spacer	segment.c	/^int header, spacer, lineWidth;$/;"	v
+splitBottom	ocr.h	/^	int splitTop, splitBottom; \/\/ boolean: artificially split at top or bottom$/;"	m	struct:__anon1
+splitLine	segment.c	/^void splitLine(lineHeaderList *curLineHeader) {$/;"	f
+splitTop	ocr.h	/^	int splitTop, splitBottom; \/\/ boolean: artificially split at top or bottom$/;"	m	struct:__anon1
+splitWideGlyphs	segment.c	/^void splitWideGlyphs() {$/;"	f
+splittable	main.c	/^float splittable = SPLITTABLE;$/;"	v
+swap	kd.c	221;"	d	file:
+swap	p_kd.c	227;"	d	file:
+templateData	template.c	/^char *templateData[MAXTEMPLATES];$/;"	v
+templateDataCount	template.c	/^int templateDataCount;$/;"	v
+textBuffer	gtkDisplay.c	/^GtkTextBuffer *textBuffer;$/;"	v
+textLine	ocr.h	/^} textLine;$/;"	t	typeref:struct:__anon1
+textView	gtkDisplay.c	/^GtkWidget *textView = NULL;$/;"	v
+title	gtkDisplay.c	/^GtkWidget *title = NULL;$/;"	v
+top	ocr.h	/^	int top; \/\/ row of the top of the text line (same as in textLine)$/;"	m	struct:glyph_s
+top	ocr.h	/^	int top; \/\/ row of the top of the text line$/;"	m	struct:__anon1
+totalHeight	segment.c	/^int totalWidth = 0, totalHeight = 0, glyphCount = 0;$/;"	v
+totalWidth	segment.c	/^int totalWidth = 0, totalHeight = 0, glyphCount = 0;$/;"	v
+true	ocr.h	61;"	d
+tryPathSeparation	segment.c	/^int *tryPathSeparation(glyph_t *glyphPtr) {$/;"	f
+tryPathSeparationOld	segment.c	/^int *tryPathSeparationOld(glyph_t *glyphPtr) { \/\/ working, to be improved$/;"	f
+tuple	ocr.h	/^	tuple_t tuple;$/;"	m	struct:glyph_s
+tuple_t	ocr.h	/^typedef float *tuple_t; \/\/ points to an array of length TUPLELENGTH$/;"	t
+unMark	segment.c	/^void unMark() { \/\/ convert all marked cells back to simply black$/;"	f
+usage	main.c	/^static void usage() {$/;"	f	file:
+useFlood	main.c	/^int useFlood = 0;$/;"	v
+values	ocr.h	/^	const char *values[BUCKETSIZE]; \/\/ for each tuple, if known.$/;"	m	struct:__anon2
+verticallyClose	segment.c	/^int verticallyClose(glyph_t *aGlyph, textLine *aLine, textLine *nextLine) {$/;"	f
+width	readPicture.c	/^tsize_t width, height;$/;"	v
+writeTemplate	template.c	/^void writeTemplate() {$/;"	f
+writeTraining	training.c	/^void writeTraining() {$/;"	f
+writeTuples	kd.c	/^void writeTuples() {$/;"	f
+yellowStyle	gtkDisplay.c	/^GtkStyle *redStyle, *greenStyle, *blueStyle, *yellowStyle;$/;"	v

@@ -1,0 +1,60 @@
+Copyright © Raphael Finkel 2007-2015 raphael@cs.uky.edu  
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.
+
+This software is not well documented.
+
+The underlying idea
+
+    1.  The ocr program takes a single black-and-white TIFF image (if you want
+    many, run it in a script).  It identifies lines of text by finding
+    horizontal empty regions.  Within each line it identifies glyphs by finding
+    vertical empty regions.
+    
+    2.  Each glyph is converted to a vector of 25 real numbers in the range 0.0
+    to 1.0 indicating the fraction of black cells in of 25 regions plus one more
+    number pertaining to the aspect ratio of the glyph.  That number is the
+    "signature" of the glyph.  The ocr program starts with a file (such as
+    fontData/yiddishData) indicating the UTF-8 code for many signatures.  For
+    each signature on the page, it finds the Euclidean nearest neighbor (using
+    k-d trees). If that neighbor is close enough, it dictates the UTF-8
+    translation of the glyph.
+
+    3.  ocr.h taks some command-line parameters for various matters.
+
+    4.  In interactive mode, you can move the scrollbars in the upper (showing
+    the image) or lower (showing the OCR output) panes.  You may click on a
+    glyph in the upper pane and look (in the middle pane) at its interpretation,
+    and you may assign a new interpretation in the text box in the middle pane.
+    You can write out the current font information with a button in the middle
+    pane.
+
+You need various libraries.  Here are the Ubuntu package names.
+
+    libtiff4 libtiff4-dev libfribidi0
+
+Look at the Makefile to get an idea of how to use ocr.  In particular, try
+
+    make interactive
+
+and also
+
+    make batch
+
+To train ocr on a new text, you need to fiddle first with the -w and -h
+parameters so that small things like a pasekh are correctly seen, but noise on
+the page is not.  Then (assuming your text is in Yiddish), make a copy of
+fontData/yiddishData for your own text as a starting point.  Run ocr
+interactively on a few pages until everything is recognized OK.  Then try it in
+batch mode.
+
