@@ -4,8 +4,8 @@ CFLAGS = -Wall -g
 LIBS = -lefence -lm # for debugging
 LIBS = -lm
 # LIBS += -ltiff `pkg-config --libs gtk+-2.0` fribidi/libfribidi.`uname -m`.so
-BIDI = /usr/lib/x86_64-linux-gnu/libfribidi.so.0
-PANGOX = /usr/lib/x86_64-linux-gnu/libpangox-1.0.so.0
+BIDI = ../libfribidi.so.0
+PANGOX = ../libpangox-1.0.so.0
 LIBS += -ltiff `pkg-config --libs gtk+-2.0` $(BIDI) $(PANGOX)
 # LIBS += /tmp/dmalloc-5.5.2/libdmalloc.a
 OBJS = readPicture.o main.o segment.o display.o gtkDisplay.o categorize.o kd.o \
@@ -678,5 +678,4 @@ bashevis-i:
 bashevis-b:
 	$(OCR) -f fontData/bashevis.data $(BASHEVIS) -t \
 	tmp/bashevis-sotn-in-goray/page*.tif | \
-		~raphael/links/y/fixutf8.pl | fixSholem.pl | ~raphael/links/y/fixspell.pl > \
-		tmp/bashevis-sotn-in-goray/output.uyid
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
