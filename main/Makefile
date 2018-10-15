@@ -681,7 +681,7 @@ bashevis-b:
 	tmp/bashevis-sotn-in-goray/page*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
 
-KAFKA = -H 600 -W 600 -d 18 -w 3 -h 2 -x -i -p 1.4 -s 0.4 -A -m 1.1
+KAFKA = -H 600 -W 600 -d 10 -w 3 -h 2 -x -i -p 1.8 -s 0.4 -A -m 1.1
 kafka-i:
 	$(OCR) -f fontData/kafka.data $(KAFKA) \
 	testtifs/kafka/*.tif
