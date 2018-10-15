@@ -5,7 +5,7 @@ LIBS = -lefence -lm # for debugging
 LIBS = -lm
 # LIBS += -ltiff `pkg-config --libs gtk+-2.0` fribidi/libfribidi.`uname -m`.so
 BIDI = ../libfribidi.so.0
-PANGOX = ../libpangox-1.0.so.0
+PANGOX = ../libpangoxft-1.0.so.0
 LIBS += -ltiff `pkg-config --libs gtk+-2.0` $(BIDI) $(PANGOX)
 # LIBS += /tmp/dmalloc-5.5.2/libdmalloc.a
 OBJS = readPicture.o main.o segment.o display.o gtkDisplay.o categorize.o kd.o \
@@ -681,7 +681,7 @@ bashevis-b:
 	tmp/bashevis-sotn-in-goray/page*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
 
-KAFKA = -H 600 -W 600 -d 10 -w 3 -h 2 -x -i -p 1.8 -s 0.4 -A -m 1.1
+KAFKA = -H 600 -W 600 -d 10 -w 3 -h 2 -x -i -p 1.8 -s 0.4 -A -m 1.1 -T
 kafka-i:
 	$(OCR) -f fontData/kafka.data $(KAFKA) \
 	testtifs/kafka/*.tif

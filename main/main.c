@@ -71,7 +71,8 @@ fprintf(stderr,
 	"\t-X do not try to combine or split.\n"
 	"\t-A always combine horizontal overlaps, even if result is worse.\n"
 	"\t-i ignore glyph's vertical placement in matching glyphs\n"
-	"\t-d n minimum glyph area\n",
+	"\t-d n minimum glyph area\n"
+	"\t-T implement TensorFlow algorithm\n",
 		MINGLYPHHEIGHT, MINGLYPHWIDTH, MAXGLYPHHEIGHT, MAXGLYPHWIDTH, MINMATCH,
 		GOODMATCH, SPLITTABLE, SPACEFRACTION, CUTOFF, SLANT
 	);
@@ -111,6 +112,7 @@ printTree(categorization, -1, "full tree", 0);
 int main (int argc, char * const argv[]) {
 fontFile = NULL;
 int textOnly = false;
+int tensorFlow = false;
 setvbuf(stderr, NULL, _IONBF, 0); // stderr comes out immediately
 while (1) { // each option
 	static struct option longOptions[] = {
@@ -193,11 +195,14 @@ while (1) { // each option
 			minGlyphArea = atoi(optarg);
 			fprintf(stderr, "Minimum acceptable area %d\n", minGlyphArea);
 			break;
+		case 'T':
+			fprintf(stdout, "Meowy McMeowskies\n");
+			tensorFlow = true; break;
 		case '?':
 			fprintf(stdout, "unrecognized option\n");
 			usage();
 			break;
-		
+
 	} // switch
 } // each option
 if (fontFile == NULL) {
