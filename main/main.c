@@ -128,7 +128,7 @@ while (1) { // each option
 		{0, 0, 0, 0}
 	};
 	int optionIndex;
-	int c = getopt_long(argc, argv, "f:th:w:s:m:H:W:g:p:c:iSL:xC:XAd:",
+	int c = getopt_long(argc, argv, "f:th:w:s:m:H:W:g:p:c:iSL:xC:XAd:T:",
 		longOptions, &optionIndex);
 	if (c == -1) break; // no more options
 	switch (c) {
