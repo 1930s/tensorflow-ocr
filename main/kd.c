@@ -177,10 +177,10 @@ float ocrDistance2(tuple_t tuple) { // returns square of distance
 const char *ocrValue(tuple_t tuple) {
 	bucket_t *bucket;
 	int index;
-	if(doTensorFlow){
-		printf("MEOWWWWWWW\n");
-		return(OCRFAILS);
-	}
+	//if(doTensorFlow){
+	//	printf("MEOWWWWWWW\n");
+	//	return(OCRFAILS);
+	//}
 	//system("python helloworld.py");
 	closestMatch(categorization, tuple, &bucket, &index, BIGDIST);
 	if (index == -1) return("·"); // empty tree
