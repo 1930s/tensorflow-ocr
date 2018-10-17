@@ -42,10 +42,11 @@ int useFlood = 0;
 int mayCombine = 1;
 int alwaysCombine = false;
 int minGlyphArea = 1;
+int doTensorFlow = false;
 
 static void usage() {
 fprintf(stderr,
-	"Usage: ocr -f fontData [-t] [-h n] [-w n] [-s n] [-W n] [-H n] [image ...] \n"
+	"Usage: ocr -f fontData [-T] [-t] [-h n] [-w n] [-s n] [-W n] [-H n] [image ...] \n"
 	"\timage, image.tif, or image.tiff is the image file\n"
 	"\timage.training is its training file.\n"
 	"\tfontData associates glyph statistics with UTF8 strings.\n" 
@@ -72,7 +73,7 @@ fprintf(stderr,
 	"\t-A always combine horizontal overlaps, even if result is worse.\n"
 	"\t-i ignore glyph's vertical placement in matching glyphs\n"
 	"\t-d n minimum glyph area\n"
-	"\t-T implement TensorFlow algorithm\n",
+	"\t-T enables TensorFlow algorithms in batch mode\n",
 		MINGLYPHHEIGHT, MINGLYPHWIDTH, MAXGLYPHHEIGHT, MAXGLYPHWIDTH, MINMATCH,
 		GOODMATCH, SPLITTABLE, SPACEFRACTION, CUTOFF, SLANT
 	);
@@ -112,11 +113,11 @@ printTree(categorization, -1, "full tree", 0);
 int main (int argc, char * const argv[]) {
 fontFile = NULL;
 int textOnly = false;
-int tensorFlow = false;
 setvbuf(stderr, NULL, _IONBF, 0); // stderr comes out immediately
 while (1) { // each option
 	static struct option longOptions[] = {
 		{"font", required_argument, 0, 0},
+		{"doTensorFlow", no_argument, 0, 0},
 		{"textout", no_argument, 0, 0},
 		{"minHeight", required_argument, 0, 0},
 		{"minWidth", required_argument, 0, 0},
@@ -128,7 +129,7 @@ while (1) { // each option
 		{0, 0, 0, 0}
 	};
 	int optionIndex;
-	int c = getopt_long(argc, argv, "f:th:w:s:m:H:W:g:p:c:iSL:xC:XAd:T:",
+	int c = getopt_long(argc, argv, "f:Tth:w:s:m:H:W:g:p:c:iSL:xC:XAd:",
 		longOptions, &optionIndex);
 	if (c == -1) break; // no more options
 	switch (c) {
@@ -197,7 +198,7 @@ while (1) { // each option
 			break;
 		case 'T':
 			fprintf(stdout, "Meowy McMeowskies\n");
-			tensorFlow = true; break;
+			doTensorFlow = true; break;
 		case '?':
 			fprintf(stdout, "unrecognized option\n");
 			usage();

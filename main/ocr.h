@@ -240,3 +240,4 @@ typedef struct p_kd_node_s {
 	extern int mayCombine;
 	extern int alwaysCombine; // for training purposes
 	extern int minGlyphArea; // default INFTY
+	extern int doTensorFlow; // enables TensorFlow in Batch Mode

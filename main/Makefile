@@ -20,7 +20,7 @@ OLDINCLUDES = -I /usr/include/gtk-2.0 -I /usr/include/glib-2.0 \
 	-I /usr/include/atk-1.0
 .SUFFIXES: .pdf .ps .tiff .tif .uyid
 OCR = ./ocr
-	# changed this from Dr. Finkel's root directory so it's not hardcoded
+	# changed this from Prof Finkel's root directory so it's not hardcoded
 	# so it is machine-inspecific
 
 default: $(GOAL)
@@ -681,12 +681,12 @@ bashevis-b:
 	tmp/bashevis-sotn-in-goray/page*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
 
-KAFKA = -H 600 -W 600 -d 10 -w 3 -h 2 -x -i -p 1.8 -s 0.4 -A -m 1.1 -T
+KAFKA = -H 600 -W 600 -d 10 -w 3 -h 2 -x -i -p 1.8 -s 0.4 -A -m 1.1
 kafka-i:
-	$(OCR) -f fontData/kafka.data $(KAFKA) \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -T \
 	testtifs/kafka/*.tif
 
 kafka-b:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -t \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
