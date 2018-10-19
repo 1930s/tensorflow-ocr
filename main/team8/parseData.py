@@ -8,8 +8,9 @@ def parseFile(filename):
 
 def main():
   #print(sys.argv[1])
-
-  print("Input: python parseData.py <file>\n")
+  if (len(sys.argv) < 2 or len(sys.argv) > 2):
+    print("python parseData.py <file_destination>\n")
+    return
   
   parseFile(sys.argv[1])
 
