@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <getopt.h>
 #include "ocr.h"
 
+
 // variables
 int minGlyphWidth = MINGLYPHWIDTH;
 int minGlyphHeight = MINGLYPHHEIGHT;
@@ -111,6 +112,8 @@ printTree(categorization, -1, "full tree", 0);
 } // simpleTest
 
 int main (int argc, char * const argv[]) {
+
+
 fontFile = NULL;
 int textOnly = false;
 setvbuf(stderr, NULL, _IONBF, 0); // stderr comes out immediately
@@ -204,6 +207,7 @@ while (1) { // each option
 			usage();
 			break;
 
+	
 	} // switch
 } // each option
 if (fontFile == NULL) {

@@ -70,6 +70,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // types
 
+
 typedef float *tuple_t; // points to an array of length TUPLELENGTH
 
 typedef struct glyph_s {

@@ -111,6 +111,7 @@ gboolean acceptInformation(GtkWidget *viewport, GdkEventButton *event,
 		int index;
 		float distance =
 			closestMatch(categorization, theGlyph->tuple, &bucket, &index, BIGDIST);
+		//fprintf(stdout, theGlyph->tuple);
 		char buf[BUFSIZ];
 		sprintf(buf, "‪%s‬ (distance %3.2f)",
 			index > -1 ? bucket->values[index] : "unknown value", distance);
@@ -184,6 +185,7 @@ void showText() { // called from a button; ignore any parameters
 				bufPtr += sprintf(bufPtr, " ");
 			}
 			bufPtr += sprintf(bufPtr, "%s", ocrValue(glyphPtr->tuple));
+			//fprintf(stdout, "%d", glyphPtr->tuple);
 			prevRight = glyphPtr->right;
 		} // one glyph
 		fprintf(stdout, "%s\n", buf);
@@ -333,7 +335,9 @@ void displayText(void *theButton, int *visual) { // from signal
 			for (; blankLines; blankLines -= 1) {
 				fprintf(stdout, "\n");
 			}
+			//RIGHT HERE
 			fprintf(stdout, "%s", lineBuf);
+			//fprintf(stdout, "%s", "TESTEST");
 		}
 	} // each line
 	if ((int) (*visual)) {
