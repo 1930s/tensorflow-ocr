@@ -128,11 +128,13 @@ void showGlyphs(textLine *theLine, const char *msg) { // debugging output
 			fillTuple(theGlyph, theGlyph->tuple);
 			fillingNow = 1;
 		}
+
 		fprintf(stderr, "\tx=[%d,%d] y=[%d,%d] %s\n",
 			theGlyph->left, theGlyph->right,
 			theGlyph->top, theGlyph->bottom,
 			ocrValue(theGlyph->tuple)
 			);
+
 		if (fillingNow) {
 			free(theGlyph->tuple);
 			theGlyph->tuple = NULL;
