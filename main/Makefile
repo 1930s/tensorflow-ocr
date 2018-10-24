@@ -683,15 +683,25 @@ bashevis-b:
 
 KAFKA = -H 600 -W 600 -d 10 -w 3 -h 2 -x -i -p 1.8 -s 0.4 -A -m 1.1
 kafka-i:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -T \
+	$(OCR) -f fontData/kafka.data $(KAFKA) \
 	testtifs/kafka/*.tif
 
 kafka-b:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -t \
+	testtifs/kafka/*.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
+
+kafka-t:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
 
 quickkafka-b:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -t \
+	testtifs/kafka/xaaa.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl 
+
+quickkafka-t:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl 
