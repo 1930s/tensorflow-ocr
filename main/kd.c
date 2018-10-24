@@ -178,10 +178,17 @@ const char *ocrValue(tuple_t tuple) {
 	bucket_t *bucket;
 	int index;
 
-	//if(doTensorFlow){
 	//	printf("MEOWWWWWWW\n");
 	//	return(OCRFAILS);
-	//}
+
+	//fprintf(stdout, "%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",tuple);
+
+	if(doTensorFlow){
+		for(int i=0; i<=26; i++)
+			fprintf(stdout, "%f, %s", tuple[i], " ");
+		fprintf(stdout, "%s", "\n");
+	}
+
 
 	//system("python helloworld.py");
 
@@ -193,6 +200,7 @@ const char *ocrValue(tuple_t tuple) {
 	} else {
 		return(OCRFAILS);
 	}
+	//fclose(fp);
 } // ocrValue
 
 int maxSpreadDimension(tuple_t *key, int count) {

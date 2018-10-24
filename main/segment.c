@@ -131,7 +131,7 @@ void showGlyphs(textLine *theLine, const char *msg) { // debugging output
 
 		fprintf(stderr, "\tx=[%d,%d] y=[%d,%d] %s\n",
 			theGlyph->left, theGlyph->right,
-			theGlyph->top, theGlyph->bottom,
+		 	theGlyph->top, theGlyph->bottom,
 			ocrValue(theGlyph->tuple)
 			);
 
@@ -940,6 +940,7 @@ int findLines(int column) { // returns Boolean for success
 		numLines += 1;
 	}
 	fprintf(stderr, "There are %d lines in column %d\n", numLines, column);
+//	fprintf(stdout, "TESTEST");
 	int numGlyphs = 0;
 	int lineNumber = 0;
 	int totalWidth = 0;
