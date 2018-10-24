@@ -16,13 +16,15 @@ def parseFile(filename):
   for line in file:
     #print line + "\n"
     start = 0 #reset start of line range
-    for digit in range(len(line)):
-      if(line[digit] == " "): #look for a divider
-        tupleArray[lineCounter][int(floor(digit/5))] = line[start:digit] #insert new value
+    for digit in range(0, len(line)):
+      if(line[digit] == " " and start <= digit): #look for a divider
+        tupleArray[lineCounter][int(math.floor(digit/5))-1] = line[start:digit] #insert new value
         start = digit #set previous line range to previous divider
     lineCounter += 1 #we are on the next line for reading
     #tupleArray = line
     #print(tupleArray)
+
+    return tupleArray
 
 def main():
   #print(sys.argv[1])
@@ -30,7 +32,10 @@ def main():
     print("python parseData.py <file_destination>\n")
     return
 
-  parseFile(sys.argv[1])
+  tupleArray = parseFile(sys.argv[1])
+  print(tupleArray)
+
+  return
 
 
 main()
