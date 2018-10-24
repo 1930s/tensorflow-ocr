@@ -13,7 +13,9 @@ def parseFile(filename):
   lineLen = len(file.readline()) #get length of each line
   valDivisor = 6
   glyphLen = (lineLen/valDivisor)+1 #get glyph value length +1 for all 28 values
-  tupleArray = [[0]*glyphLen]*fileLen #set dimensions of array to hold values
+  #tupleArray = [[0]*glyphLen]*fileLen #set dimensions of array to hold values
+  tupleArray = []
+  tupleArray.append([])
 
   lineCounter = 0
   for line in file:
@@ -21,11 +23,11 @@ def parseFile(filename):
     start = 0 #reset start of line range
     for digit in range(0, len(line)):
       if(line[digit] == " " and start <= digit and line[digit] != "\n"): #look for a divider
-        tupleArray[lineCounter][int(math.floor(digit/valDivisor))] = line[start:digit] #insert new value to tupleArray[0][0] for example
+        tupleArray[lineCounter].append(line[start:digit])
+        #tupleArray[lineCounter][int(math.floor(digit/valDivisor))] = line[start:digit] #insert new value to tupleArray[0][0] for example
         start = digit+1 #set previous line range to previous divider, +1 so its not on the " "
     lineCounter += 1 #we are on the next line for reading
-    #tupleArray = line
-    #print(tupleArray)
+    tupleArray.append([])
 
   return tupleArray
 
