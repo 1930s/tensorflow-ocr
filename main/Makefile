@@ -690,3 +690,8 @@ kafka-b:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
+
+quickkafka-b:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
+	testtifs/kafka/xaaa.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl 
