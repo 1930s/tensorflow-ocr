@@ -181,6 +181,22 @@ const char *ocrValue(tuple_t tuple) {
 	//	printf("MEOWWWWWWW\n");
 	//	return(OCRFAILS);
 	//}
+	
+	//print out tuple to file.txt
+//	FILE *fp;
+//	fp = fopen("file.txt", "w");
+//	fprintf(fp, "TESTEST");
+//	fclose(fp);
+
+	//fprintf(stdout, "%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",tuple);
+
+	for(int i=0; i<=30; i++)
+	{
+		fprintf(stdout, "%f, %s", tuple[i], " ");
+
+	}
+	fprintf(stdout, "%s", "\n");
+
 	//system("python helloworld.py");
 	closestMatch(categorization, tuple, &bucket, &index, BIGDIST);
 	if (index == -1) return("·"); // empty tree
@@ -190,6 +206,7 @@ const char *ocrValue(tuple_t tuple) {
 	} else {
 		return(OCRFAILS);
 	}
+	//fclose(fp);
 } // ocrValue
 
 int maxSpreadDimension(tuple_t *key, int count) {
