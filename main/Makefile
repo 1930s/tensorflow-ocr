@@ -705,3 +705,7 @@ quickkafka-t:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl 
+
+quickkafka-t2:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t 
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl 
