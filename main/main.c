@@ -220,7 +220,8 @@ while (optind < argc) { // each TIFF file
 	if (dotPos) *dotPos = 0; // remove extension 
 	do {
 		// printf("reading picture\n");
-		fprintf(stdout, "%s\n", fileBase);
+		if(!doTensorFlow)
+			fprintf(stdout, "%s\n", fileBase);
 		fprintf(stderr, "%s\n", fileBase);
 		readPicture();
 		if (!noShear) shearPicture();

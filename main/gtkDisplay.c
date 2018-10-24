@@ -336,7 +336,8 @@ void displayText(void *theButton, int *visual) { // from signal
 				fprintf(stdout, "\n");
 			}
 			//RIGHT HERE
-			fprintf(stdout, "%s", lineBuf);
+			if(!doTensorFlow)
+				fprintf(stdout, "%s", lineBuf);
 			//fprintf(stdout, "%s", "TESTEST");
 		}
 	} // each line

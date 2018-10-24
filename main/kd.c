@@ -75,7 +75,7 @@ static int ballOverlapBounds(tuple_t probe, kd_node_t *treeNode,
 	// fprintf(stdout, "\tballOverlapBounds: closest distance is %7.3f; "
 	// 	"true distance is %7.3f\n", sqrtf(distSquared(probe, closestCorner)),
 	// 	trueDist);
-	free(closestCorner);	
+	free(closestCorner);
 	return(answer);
 } // ballOverlapBounds
 
@@ -184,7 +184,7 @@ const char *ocrValue(tuple_t tuple) {
 	//fprintf(stdout, "%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",tuple);
 
 	if(doTensorFlow){
-		for(int i=0; i<=26; i++)
+		for(int i=0; i<=27; i++)
 			fprintf(stdout, "%f, %s", tuple[i], " ");
 		fprintf(stdout, "%s", "\n");
 	}
