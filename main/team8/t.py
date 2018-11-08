@@ -22,12 +22,21 @@ for line in file:
       labels_arr.append(letter)
   lineCounter += 1 #we are on the next line for reading
 
-#print(labels_arr)
+print(labels_arr)
 remove_dups_labels_arr = set(labels_arr)
 #print(remove_dups_labels_arr)
 sorted_labels_arr = sorted(remove_dups_labels_arr)
-#print(sorted_labels_arr)
+print(sorted_labels_arr)
 
+numeric_labels_arr = []
+
+for value in labels_arr:
+    for label in sorted_labels_arr:
+        if value == label:
+            index = sorted_labels_arr.index(label)
+            numeric_labels_arr.append(index)
+
+print(numeric_labels_arr)
 ###############################################
 
 #filenames = tf. train.string_input_producer(["./k3.csv"]);
