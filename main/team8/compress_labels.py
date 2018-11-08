@@ -30,7 +30,7 @@ def main():
     return
 
   labels_arr = parseLabels(sys.argv[1])
-  print(labels_arr, " ")
+  #print(labels_arr, " ")
 
   remove_dups_labels_arr = set(labels_arr)
   print(remove_dups_labels_arr)
