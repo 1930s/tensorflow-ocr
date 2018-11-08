@@ -2,21 +2,27 @@ from __future__ import print_function
 
 import tensorflow as tf
 
-# Simple hello world using TensorFlow
-
-# Create a Constant op
-# The op is added as a node to the default graph.
-#
-# The value returned by the constructor represents the output
-# of the Constant op.
+#HelloWorld
 hello = tf.constant('Hello, TensorFlow!')
-
-# Start tf session
 sess2 = tf.Session()
-
-# Run the op
 print(sess2.run(hello))
 
+#Leah's code here
+file = open("./kafka.data", "r")
+labels_arr = []
+lineCounter = 0
+
+for line in file:
+  start = 0 #reset start of line range
+  for symbol in range(0, len(line)-1):
+    if(symbol == 161):
+      letter = line[162:len(line)-1]
+      labels_arr.append(letter)
+  lineCounter += 1 #we are on the next line for reading
+
+print(labels_arr, " ")
+remove_dups_labels_arr = set(labels_arr)
+print(remove_dups_labels_arr)
 
 filenames = tf. train.string_input_producer(["./k3.csv"]);
 reader = tf.TextLineReader()
@@ -41,11 +47,5 @@ with tf.Session() as sess:
   coord.request_stop()
   coord.join(threads)
 
-  hello2 = tf.constant('go fuck yourself.')
-  print(sess.run(hello2))
-
-
-
-
-
+  print("rly go fuck yourself")
 
