@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import tensorflow as tf
+import numpy as np
 
 #HelloWorld
 hello = tf.constant('Hello, TensorFlow!')
@@ -28,7 +29,7 @@ remove_dups_labels_arr = set(labels_arr)
 sorted_labels_arr = sorted(remove_dups_labels_arr)
 print(sorted_labels_arr)
 
-numeric_labels_arr = []
+numeric_labels_arr = []  #label input into tensyflow
 
 for value in labels_arr:
     for label in sorted_labels_arr:
@@ -36,7 +37,8 @@ for value in labels_arr:
             index = sorted_labels_arr.index(label)
             numeric_labels_arr.append(index)
 
-print(numeric_labels_arr)
+flowy_labels = np.array(numeric_labels_arr)
+print(flowy_labels)
 ###############################################
 
 #filenames = tf. train.string_input_producer(["./k3.csv"]);
@@ -53,7 +55,7 @@ tupleArray = []
 
 lineCounter = 0
 for line in file:
-    tupleArray.append([])
+    tupleArray.append([]) #tupleArray is the 27-float array
     start = 0 #reset start of line range
 
     for digit in range(0, len(line)-1):
@@ -64,7 +66,8 @@ for line in file:
 
     lineCounter += 1 #we are on the next line for reading
 
-#print(tupleArray)
+floaty_floats = np.array(tupleArray)
+print(floaty_floats)
 
 ###############################################
 
