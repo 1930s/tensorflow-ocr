@@ -7,6 +7,8 @@ hello = tf.constant('Hello, TensorFlow!')
 sess2 = tf.Session()
 print(sess2.run(hello))
 
+###############################################
+
 #Leah's code here
 file = open("../fontData/kafka.data", "r")
 labels_arr = []
@@ -24,12 +26,15 @@ for line in file:
 remove_dups_labels_arr = set(labels_arr)
 #print(remove_dups_labels_arr)
 sorted_labels_arr = sorted(remove_dups_labels_arr)
-print(sorted_labels_arr)
+#print(sorted_labels_arr)
 
+###############################################
 
 #filenames = tf. train.string_input_producer(["./k3.csv"]);
 #reader = tf.TextLineReader()
 #key, value = reader.read(filenames)
+
+###############################################
 
 #Blake's code
 #simply goes through the .data file and pushes each glyph into tuples
@@ -50,7 +55,9 @@ for line in file:
 
     lineCounter += 1 #we are on the next line for reading
 
-print(tupleArray)
+#print(tupleArray)
+
+###############################################
 
 # Default values, in case of empty columns. Also specifies the type of the
 # decoded result.
