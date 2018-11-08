@@ -1,7 +1,5 @@
 from __future__ import print_function
 from tensorflow import keras
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Activation
 
 import tensorflow as tf
 import numpy as np
@@ -57,6 +55,7 @@ print(flowy_labels.shape)
 #simply goes through the .data file and pushes each glyph into tuples
 filename = '../fontData/kafka.data'
 file = open(filename, "r")
+
 tupleArray = []
 
 lineCounter = 0
@@ -91,19 +90,17 @@ with tf.Session() as sess:
   # Start populating the filename queue.
 
     model = keras.Sequential([
-      Dense(32, input_shape=(27,)), 
-      Activation('relu'),
-      Dense(10),
-      Activation('softmax'),
+      keras.layers.Dense(131072, input_shape=(27,), activation=tf.nn.relu), 
+      keras.layers.Dense(58, activation=tf.nn.softmax), #first parameter is hardcoded as # of unique labels
     ])
 
     model.compile(optimizer=tf.train.AdamOptimizer(), 
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-    model.fit(flowy_labels, floaty_floats, epochs=5)
+    model.fit(floaty_floats, flowy_labels, epochs=20)
 
-    test_loss, test_acc = model.evaluate(test_images, test_labels)
+    test_loss, test_acc = model.evaluate(floaty_floats, flowy_labels)
 
     print('Test accuracy:', test_acc)
 
