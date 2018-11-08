@@ -1,8 +1,10 @@
 import sys
+import os
 
 #simply goes through the .data file and pushes each glyph into tuples
-def parseFile(filename):
-  file = open(filename, "r")
+def parseFileArray(filename):
+  
+  file_to_read = open(filename, "r")
   tupleArray = []
 
   lineCounter = 0
@@ -18,16 +20,39 @@ def parseFile(filename):
     
     lineCounter += 1 #we are on the next line for reading
 
+    file_to_read.close() #close file for safety
+
   return tupleArray
+
+def parseFileCSV(filename, newfile):
+  
+  directory = "CSV_Data"
+
+  if not os.path.exists(directory): #create file directory it it doesnt exist already
+    os.makedirs(directory)
+
+  file_to_read = open(filename, "r")
+  file_to_write = open(os.path.join(directory, newfile + ".csv"), "w")
+
+  for line in file_to_read:
+    line = line.replace(" ", ",") #replace spaces with ','
+    file_to_write.write(line)
+
+  file_to_read.close() #close file for safety
+  file_to_write.close() #close file for safety
+
+  return 0
+
 
 def main():
   #print(sys.argv[1])
-  if (len(sys.argv) < 2 or len(sys.argv) > 2):
-    print("python parseData.py <file_destination>\n")
+  if (len(sys.argv) < 2 or len(sys.argv) > 3):
+    print("python parseData.py <file_destination> <new .csv file name>\n")
     return
 
-  tupleArray = parseFile(sys.argv[1])
-  print(tupleArray)
+  val = parseFileCSV(sys.argv[1], sys.argv[2])
+  if(val != 0)
+    print("An error occurred.")
 
   return
 

@@ -76,6 +76,8 @@ def cnn_model_fn(features, labels, mode):
 
 # MAIN
 def main(unused_argv):
+  # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
   # Load training and eval data
   mnist = tf.contrib.learn.datasets.load_dataset("mnist")
 
@@ -91,23 +93,25 @@ def main(unused_argv):
 
 
   # Create the Estimator
-  mnist_classifier = tf.estimator.Estimator(model_fn=cnn_model_fn, model_dir="/tmp/mnist_convnet_model")
+  classifier = tf.estimator.Estimator(model_fn=cnn_model_fn, model_dir="/tmp/mnist_convnet_model")
 
   # Set up logging for predictions
   tensors_to_log = {"probabilities": "softmax_tensor"}
   logging_hook = tf.train.LoggingTensorHook(tensors=tensors_to_log, every_n_iter=50)
 
 
-  # Train the model
+  # Train the model, 
+  # steps refers to the number of training steps (adjust this to lower time for whole program)
+  # shuffle refers to shuffling the training data
   train_input_fn = tf.estimator.inputs.numpy_input_fn(
       x={"x": train_data}, 
       y=train_labels, 
       batch_size=100, 
       num_epochs=None, 
       shuffle=True)
-  mnist_classifier.train(
+  classifier.train(
     input_fn=train_input_fn,
-    steps=20000,
+    steps=200, 
     hooks=[logging_hook])
 
 
@@ -117,7 +121,7 @@ def main(unused_argv):
     y=eval_labels,
     num_epochs=1,
     shuffle=False)
-  eval_results = mnist_classifier.evaluate(input_fn=eval_input_fn)
+  eval_results = classifier.evaluate(input_fn=eval_input_fn)
   print(eval_results)
 
 if __name__ == "__main__":
