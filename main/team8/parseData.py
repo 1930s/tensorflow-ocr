@@ -12,16 +12,19 @@ def parseFileArray(filename):
     tupleArray.append([])
     start = 0 #reset start of line range
     
-    for digit in range(0, len(line)):
-      if(line[digit] == " " and start <= digit or line[digit] == "\n"): #look for a divider
+    for digit in range(0, len(line)-1):
+      if(line[digit] == " "  and start <= digit or line[digit] == "\n"): #look for a divider
         tupleArray[lineCounter].append(line[start:digit]) #adds value into the tuple
         #tupleArray[lineCounter][int(math.floor(digit/valDivisor))] = line[start:digit] #insert new value to tupleArray[0][0] for example
         start = digit+1 #set previous line range to previous divider, +1 so its not on the " "
     
     lineCounter += 1 #we are on the next line for reading
+<<<<<<< HEAD
 
     file_to_read.close() #close file for safety
 
+=======
+>>>>>>> 005c89ba1fc0cf28731b1b4dbd400e40ddffa151
   return tupleArray
 
 def parseFileCSV(filename, newfile):
