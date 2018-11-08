@@ -1,4 +1,7 @@
 from __future__ import print_function
+from tensorflow import keras
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Activation
 
 import tensorflow as tf
 import numpy as np
@@ -14,6 +17,7 @@ print(sess2.run(hello))
 file = open("../fontData/kafka.data", "r")
 labels_arr = []
 lineCounter = 0
+
 
 for line in file:
   start = 0 #reset start of line range
@@ -39,6 +43,8 @@ for value in labels_arr:
 
 flowy_labels = np.array(numeric_labels_arr)
 print(flowy_labels)
+print("Shape: ")
+print(flowy_labels.shape)
 ###############################################
 
 #filenames = tf. train.string_input_producer(["./k3.csv"]);
@@ -68,6 +74,8 @@ for line in file:
 
 floaty_floats = np.array(tupleArray)
 print(floaty_floats)
+print("Shape: ")
+print(floaty_floats.shape)
 
 ###############################################
 
@@ -79,8 +87,28 @@ print(floaty_floats)
 #col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15, col16, col17, col18, col19, col20, col21, col22, col23, col24, col25,  col26, col27 = tf.decode_csv(value, record_defaults=r, field_delim=' ')
 #features = tf.stack([col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15, col16, col17, col18, col19, col20, col21, col22, col23, col24, col25,  col26, col27])
 
-#with tf.Session() as sess:
+with tf.Session() as sess:
   # Start populating the filename queue.
+
+    model = keras.Sequential([
+      Dense(32, input_shape=(27,)), 
+      Activation('relu'),
+      Dense(10),
+      Activation('softmax'),
+    ])
+
+    model.compile(optimizer=tf.train.AdamOptimizer(), 
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+    model.fit(flowy_labels, floaty_floats, epochs=5)
+
+    test_loss, test_acc = model.evaluate(test_images, test_labels)
+
+    print('Test accuracy:', test_acc)
+
+
+
 #  coord = tf.train.Coordinator()
 #  threads = tf.train.start_queue_runners(coord=coord)
 
