@@ -184,7 +184,7 @@ const char *ocrValue(tuple_t tuple) {
 	//fprintf(stdout, "%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",tuple);
 
 	if(doTensorFlow){
-		for(int i=0; i<=27; i++)
+		for(int i=0; i<27; i++)
 			fprintf(stdout, "%f, %s", tuple[i], " ");
 		fprintf(stdout, "%s", "\n");
 	}

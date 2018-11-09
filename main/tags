@@ -9,13 +9,13 @@ BIGDIST	ocr.h	57;"	d
 BUCKETSIZE	ocr.h	47;"	d
 CUTOFF	ocr.h	69;"	d
 DIMS	p_kd.c	28;"	d	file:
-DOWN	segment.c	1513;"	d	file:
-DOWNLEFT	segment.c	1519;"	d	file:
-DOWNLEFTLEFT	segment.c	1537;"	d	file:
-DOWNRIGHT	segment.c	1528;"	d	file:
-DOWNRIGHTRIGHT	segment.c	1549;"	d	file:
-FRIBIDI_MASK_NEUTRAL	kd.c	511;"	d	file:
-FRIBIDI_MASK_RTL	kd.c	510;"	d	file:
+DOWN	segment.c	1515;"	d	file:
+DOWNLEFT	segment.c	1521;"	d	file:
+DOWNLEFTLEFT	segment.c	1539;"	d	file:
+DOWNRIGHT	segment.c	1530;"	d	file:
+DOWNRIGHTRIGHT	segment.c	1551;"	d	file:
+FRIBIDI_MASK_NEUTRAL	kd.c	505;"	d	file:
+FRIBIDI_MASK_RTL	kd.c	504;"	d	file:
 GOODHEIGHT	ocr.h	55;"	d
 GOODMATCH	ocr.h	63;"	d
 GOODWIDTH	ocr.h	49;"	d
@@ -23,12 +23,12 @@ GRID	ocr.h	45;"	d
 GUI	gtkDisplay.c	/^void GUI(int col) {$/;"	f
 HEIGHT	segment.c	44;"	d	file:
 INFTY	ocr.h	44;"	d
-ISBLACK	segment.c	1770;"	d	file:
+ISBLACK	segment.c	1772;"	d	file:
 ISBLANK	segment.c	42;"	d	file:
 ISFILLED	segment.c	43;"	d	file:
-ISMARKED	segment.c	1769;"	d	file:
+ISMARKED	segment.c	1771;"	d	file:
 LIGHTSUM	ocr.h	66;"	d
-MARK	segment.c	1767;"	d	file:
+MARK	segment.c	1769;"	d	file:
 MAX	ocr.h	40;"	d
 MAXGLYPHHEIGHT	ocr.h	54;"	d
 MAXGLYPHWIDTH	ocr.h	53;"	d
@@ -50,12 +50,12 @@ SKIPBLANKLINES	segment.c	58;"	d	file:
 SKIPNONBLANKCOLS	segment.c	79;"	d	file:
 SKIPNONBLANKLINES	segment.c	65;"	d	file:
 SLANT	ocr.h	68;"	d
-SOMEDARK	segment.c	352;"	d	file:
+SOMEDARK	segment.c	354;"	d	file:
 SPACEFRACTION	ocr.h	62;"	d
 SPLITGAP	segment.c	23;"	d	file:
 SPLITTABLE	ocr.h	64;"	d
 TUPLELENGTH	ocr.h	46;"	d
-UNMARK	segment.c	1768;"	d	file:
+UNMARK	segment.c	1770;"	d	file:
 VERSION	ocr.h	25;"	d
 VERYBIG	p_kd.c	27;"	d	file:
 acceptInformation	gtkDisplay.c	/^gboolean acceptInformation(GtkWidget *viewport, GdkEventButton *event,$/;"	f
@@ -110,7 +110,7 @@ distSquared	kd.c	/^static float distSquared(tuple_t tuple1, tuple_t tuple2) {$/;
 distSquared	p_kd.c	/^static float distSquared(p_tuple_t tuple1, p_tuple_t tuple2) {$/;"	f	file:
 distance	ocr.h	/^	float distance; \/\/ closest distance to known glyph, or -1 if uninitialized$/;"	m	struct:glyph_s
 doExit	gtkDisplay.c	/^void doExit() {$/;"	f
-doTensorFlow	main.c	/^int doTensorFlow = false;$/;"	v
+doTensorFlow	main.c	/^int doTensorFlow = 0;$/;"	v
 end	ocr.h	/^	glyph_t *end; \/\/ the last glyph; points to dummy if none.$/;"	m	struct:__anon1
 evaluatePathSplit	segment.c	/^float evaluatePathSplit(glyph_t *glyphPtr, glyph_t *first, int *splitPath) {$/;"	f
 false	ocr.h	60;"	d
@@ -276,7 +276,7 @@ splitLine	segment.c	/^void splitLine(lineHeaderList *curLineHeader) {$/;"	f
 splitTop	ocr.h	/^	int splitTop, splitBottom; \/\/ boolean: artificially split at top or bottom$/;"	m	struct:__anon1
 splitWideGlyphs	segment.c	/^void splitWideGlyphs() {$/;"	f
 splittable	main.c	/^float splittable = SPLITTABLE;$/;"	v
-swap	kd.c	244;"	d	file:
+swap	kd.c	238;"	d	file:
 swap	p_kd.c	227;"	d	file:
 templateData	template.c	/^char *templateData[MAXTEMPLATES];$/;"	v
 templateDataCount	template.c	/^int templateDataCount;$/;"	v
