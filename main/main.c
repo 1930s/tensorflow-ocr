@@ -43,7 +43,7 @@ int useFlood = 0;
 int mayCombine = 1;
 int alwaysCombine = false;
 int minGlyphArea = 1;
-int doTensorFlow = false;
+int doTensorFlow = 0;
 
 static void usage() {
 fprintf(stderr,
@@ -200,8 +200,8 @@ while (1) { // each option
 			fprintf(stderr, "Minimum acceptable area %d\n", minGlyphArea);
 			break;
 		case 'T':
-			fprintf(stdout, "Meowy McMeowskies\n");
-			doTensorFlow = true; break;
+			//fprintf(stdout, "Meowy McMeowskies\n");
+			doTensorFlow = 1; break;
 		case '?':
 			fprintf(stdout, "unrecognized option\n");
 			usage();
