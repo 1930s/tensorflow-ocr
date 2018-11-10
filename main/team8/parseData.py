@@ -8,25 +8,23 @@ def parseFileArray(filename):
   tupleArray = []
 
   lineCounter = 0
-  for line in file:
+  for line in file_to_read:
     tupleArray.append([])
     start = 0 #reset start of line range
     
-    for digit in range(0, len(line)-1):
-      if(line[digit] == " "  and start <= digit or line[digit] == "\n"): #look for a divider
+    for digit in range(0, len(line)):
+      if(line[digit] == " " or line[digit] == "\n" and start <= digit): #look for a divider
         tupleArray[lineCounter].append(line[start:digit]) #adds value into the tuple
         #tupleArray[lineCounter][int(math.floor(digit/valDivisor))] = line[start:digit] #insert new value to tupleArray[0][0] for example
         start = digit+1 #set previous line range to previous divider, +1 so its not on the " "
     
     lineCounter += 1 #we are on the next line for reading
-<<<<<<< HEAD
 
-    file_to_read.close() #close file for safety
+    #file_to_read.close() #close file for safety
 
-=======
->>>>>>> 005c89ba1fc0cf28731b1b4dbd400e40ddffa151
   return tupleArray
 
+#converts a .data file into a .csv file
 def parseFileCSV(filename, newfile):
   
   directory = "CSV_Data"
@@ -46,15 +44,34 @@ def parseFileCSV(filename, newfile):
 
   return 0
 
+#simply pulls the end of each tupleArray in the 2D list, ignoring the data beforehand
+def pullLabels(tupleArray):
+  
+  tuplesLen = len(tupleArray)
+  tupleArrayLen = len(tupleArray[0]) #0 because the len of each array in the 2D set is the same
+
+  labels = [] #create a list of labels the same length as the 2D tupleArray
+  for array in tupleArray:
+    labels.append(array[tupleArrayLen-1])
+
+  return labels
+
 
 def main():
   #print(sys.argv[1])
+
   if (len(sys.argv) < 2 or len(sys.argv) > 3):
     print("python parseData.py <file_destination> <new .csv file name>\n")
     return
 
   val = parseFileCSV(sys.argv[1], sys.argv[2])
-  if(val != 0)
+
+  labels = pullLabels(parseFileArray(sys.argv[1]))
+
+  print(labels)
+  print(len(labels))
+
+  if(val != 0):
     print("An error occurred.")
 
   return
