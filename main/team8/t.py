@@ -14,9 +14,7 @@ print(sess2.run(hello))
 ###############################################
 
 #Leah's code here
-#file = open("../fontData/kafka.data", "r")
-filename = './kafka2.data'
-file = open(filename, "r")
+file = open("../fontData/kafka.data", "r")
 labels_arr = []
 lineCounter = 0
 
@@ -58,8 +56,7 @@ flowy_labels = np.array(numeric_labels_arr)
 
 #Blake's code
 #simply goes through the .data file and pushes each glyph into tuples
-#filename = '../fontData/kafka.data'
-filename = './kafka2.data'
+filename = '../fontData/kafka.data'
 file = open(filename, "r")
 
 tupleArray = []
