@@ -100,7 +100,6 @@ for line in file_test:
   for place in range(0, len(line)):
     if(line[place]==","):
       testmatrix[rowcount][colcount]=line[(place-8):place]
-      #testmatrix[rowcount][colcount]=colcount
       colcount+=1
   rowcount+=1
 
@@ -120,17 +119,16 @@ with tf.Session() as sess:
   # Start populating the filename queue.
 
     model = keras.Sequential([
-      #keras.layers.Dense(131072, input_shape=(27,), activation=tf.nn.relu), 
-      keras.layers.Dense(256, input_shape=(27,), activation=tf.nn.relu), 
+      keras.layers.Dense(512, input_shape=(27,), activation=tf.nn.relu), 
       keras.layers.Dense(len(sorted_labels_arr), activation=tf.nn.softmax), #first parameter is hardcoded as # of unique labels
     ])
 
-    model.compile(optimizer=tf.train.AdamOptimizer(), 
-    #model.compile(optimizer='rmsprop', 
+    #model.compile(optimizer=tf.train.AdamOptimizer(), 
+    model.compile(optimizer='rmsprop', 
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-    model.fit(tupleArray, flowy_labels, epochs=100)
+    model.fit(tupleArray, flowy_labels, epochs=100, batch_size=32)
 
     print("Flowy labels:")
     print(flowy_labels)
@@ -159,6 +157,6 @@ with tf.Session() as sess:
 
 
 #    print(meow[777])
- #   print("Meow 4:", np.argmax(meow[777]))
+#    print("Meow 4:", np.argmax(meow[777]))
 
     print(meow.shape)    
