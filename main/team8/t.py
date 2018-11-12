@@ -12,8 +12,11 @@ sess2 = tf.Session()
 print(sess2.run(hello))
 
 ###############################################
+#Thank you Leah for this magical code. 
+#And here we witness how the training data gets parsed and each label gets mapped to an appropriate integer.
+# sorted_labels_arr: the finalized array of all the labels in the correct order
+# flowy_labels: a NumPy of the integers associated with those values fed into TensorFlow
 
-#Leah's code here
 file = open("../fontData/kafka.data", "r")
 labels_arr = []
 lineCounter = 0
@@ -42,7 +45,6 @@ for value in labels_arr:
             numeric_labels_arr.append(index)
 
 flowy_labels = np.array(numeric_labels_arr)
-#print(flowy_labels)
 #print("Shape: ")
 #print(flowy_labels.shape)
 
@@ -53,6 +55,9 @@ flowy_labels = np.array(numeric_labels_arr)
 #key, value = reader.read(filenames)
 
 ###############################################
+# Creating the training data
+# tupleArray: the array of training glyphs
+
 
 #Blake's code
 #simply goes through the .data file and pushes each glyph into tuples
@@ -73,7 +78,7 @@ for line in file:
 
     lineCounter += 1 #we are on the next line for reading
 
-floaty_floats = np.array(tupleArray)
+#floaty_floats = np.array(tupleArray)
 #print("len and other len:")
 #print(tupleArray)
 #print(len(tupleArray))
@@ -86,6 +91,9 @@ floaty_floats = np.array(tupleArray)
 #print(floaty_floats.shape)
 
 ###############################################
+# Creating the Test Data matrices
+# testmatrix: the list of test glyphs
+# testlabels_arr: the list of correct characters that are supposed to be associated with those glyphs
 
 filename_test = '../tmp.out'
 file_test = open(filename_test, "r")
@@ -95,6 +103,7 @@ linecount = len(open(filename_test).readlines( ))
 testmatrix = np.zeros(shape=(linecount, 27))
 testlabels_arr = []
 
+#Fun parsy times inside this loop
 rowcount = 0
 for line in file_test:
   colcount = 0
@@ -109,14 +118,14 @@ for line in file_test:
   rowcount+=1
   testlabels_arr.append(addystring)
 
-print("Test Matrix gets tested here")
-print(len(testlabels_arr))
-print(testlabels_arr)
-print(len(testmatrix))
-print(len(testmatrix[0]))
-print("random sample")
-print(testmatrix[5][5])
-print([isinstance(testmatrix[5][5], numbers.Number) for x in (0, 0.0, 0j, decimal.Decimal(0))])
+#print("Test Matrix gets tested here")
+#print(len(testlabels_arr))
+#print(testlabels_arr)
+#print(len(testmatrix))
+#print(len(testmatrix[0]))
+#print("random sample")
+#print(testmatrix[5][5])
+#print([isinstance(testmatrix[5][5], numbers.Number) for x in (0, 0.0, 0j, decimal.Decimal(0))])
 
 ###############################################
 # Default values, in case of empty columns. Also specifies the type of the
@@ -126,56 +135,45 @@ print([isinstance(testmatrix[5][5], numbers.Number) for x in (0, 0.0, 0j, decima
 with tf.Session() as sess:
   # Start populating the filename queue.
 
+    #This is basically the function that creates the neural network and all its magical juicy insides
     model = keras.Sequential([
       keras.layers.Dense(512, input_shape=(27,), activation=tf.nn.relu), 
       keras.layers.Dense(len(sorted_labels_arr), activation=tf.nn.softmax), #first parameter is hardcoded as # of unique labels
     ])
 
-    #model.compile(optimizer=tf.train.AdamOptimizer(), 
-    model.compile(optimizer='rmsprop', 
+    #Compiling the neural network
+    model.compile(optimizer=tf.train.AdamOptimizer(), #so these are the different optimizers. word on google is adam is the best
+    #model.compile(optimizer='rmsprop', 
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-    model.fit(tupleArray, flowy_labels, epochs=100, batch_size=32)
+    #Training here. Epochs are the number of runs. Batch size isn't necessary but another parameter I've been experimenting with that seems to improve performance
+    model.fit(tupleArray, flowy_labels, epochs=100, batch_size=64)
+    #model.fit(tupleArray, flowy_labels, epochs=100)
 
-    print("Flowy labels:")
-    print(flowy_labels)
-
+    #Testing the training data here
     test_loss, test_acc = model.evaluate(tupleArray, flowy_labels)
-
     print('Test accuracy:', test_acc)
 
-    meow = model.predict(testmatrix)
+    #And this is the function that predicts the new test data
+    predictions = model.predict(testmatrix)
 
-    #print(flowy_labels)
-    #print(testmatrix[0])
-    #print(testmatrix[1])
-    #print(testmatrix[2])
-    #print(testmatrix[3])
-    #print(testmatrix[4])
-
-    print(sorted_labels_arr)
-
+    #Printing the first 100 characters in the document: actual vs expected
     for i in range(0,100):    
-      #print(meow[i])
-      #print(i)
-      #print("Argmax:", np.argmax(meow[i]))
-      #print("corresponding label: ")
-      print("Actual: ", sorted_labels_arr[np.argmax(meow[i])])
+      print("Actual: ", sorted_labels_arr[np.argmax(predictions[i])])
       print("Expected: ",testlabels_arr[i])
       print()
 
+    #Figuring out the percentage of correct characters within the entire document
     total = len(testlabels_arr)
     correct = 0
     for i in range(0,len(testlabels_arr)):
-      if(sorted_labels_arr[np.argmax(meow[i])]==testlabels_arr[i]):
+      if(sorted_labels_arr[np.argmax(predictions[i])]==testlabels_arr[i]):
         correct+=1
 
     print("Percentage correct: ")
     print(100.0*correct/total)
     print(correct, "Correct")
     print(total, "Total")
-#    print(meow[777])
-#    print("Meow 4:", np.argmax(meow[777]))
 
-    print(meow.shape)    
+    #print(meow.shape)    
