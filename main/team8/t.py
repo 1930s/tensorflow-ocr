@@ -93,17 +93,25 @@ file_test = open(filename_test, "r")
 linecount = len(open(filename_test).readlines( ))
 
 testmatrix = np.zeros(shape=(linecount, 27))
+testlabels_arr = []
 
 rowcount = 0
 for line in file_test:
   colcount = 0
+  addystring = ""
   for place in range(0, len(line)):
-    if(line[place]==","):
+    if(line[place]=="," and colcount<27):
       testmatrix[rowcount][colcount]=line[(place-8):place]
       colcount+=1
+    elif(colcount==27):
+      if(line[place]!="\n" and line[place]!=" "):
+        addystring+=line[place]
   rowcount+=1
+  testlabels_arr.append(addystring)
 
 print("Test Matrix gets tested here")
+print(len(testlabels_arr))
+print(testlabels_arr)
 print(len(testmatrix))
 print(len(testmatrix[0]))
 print("random sample")
@@ -153,9 +161,20 @@ with tf.Session() as sess:
       #print(i)
       #print("Argmax:", np.argmax(meow[i]))
       #print("corresponding label: ")
-      print(sorted_labels_arr[np.argmax(meow[i])])
+      print("Actual: ", sorted_labels_arr[np.argmax(meow[i])])
+      print("Expected: ",testlabels_arr[i])
+      print()
 
+    total = len(testlabels_arr)
+    correct = 0
+    for i in range(0,len(testlabels_arr)):
+      if(sorted_labels_arr[np.argmax(meow[i])]==testlabels_arr[i]):
+        correct+=1
 
+    print("Percentage correct: ")
+    print(100.0*correct/total)
+    print(correct, "Correct")
+    print(total, "Total")
 #    print(meow[777])
 #    print("Meow 4:", np.argmax(meow[777]))
 
