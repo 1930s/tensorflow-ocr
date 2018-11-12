@@ -344,7 +344,8 @@ void displayText(void *theButton, int *visual) { // from signal
 	if ((int) (*visual)) {
 		gtk_widget_show_all(mainWindow);
 	} else {
-		fprintf(stdout, "");
+		if(!doTensorFlow)
+			fprintf(stdout, "");
 		fflush(stdout);
 	}
 } // displayText

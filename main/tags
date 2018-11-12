@@ -14,8 +14,8 @@ DOWNLEFT	segment.c	1521;"	d	file:
 DOWNLEFTLEFT	segment.c	1539;"	d	file:
 DOWNRIGHT	segment.c	1530;"	d	file:
 DOWNRIGHTRIGHT	segment.c	1551;"	d	file:
-FRIBIDI_MASK_NEUTRAL	kd.c	505;"	d	file:
-FRIBIDI_MASK_RTL	kd.c	504;"	d	file:
+FRIBIDI_MASK_NEUTRAL	kd.c	508;"	d	file:
+FRIBIDI_MASK_RTL	kd.c	507;"	d	file:
 GOODHEIGHT	ocr.h	55;"	d
 GOODMATCH	ocr.h	63;"	d
 GOODWIDTH	ocr.h	49;"	d
@@ -276,7 +276,7 @@ splitLine	segment.c	/^void splitLine(lineHeaderList *curLineHeader) {$/;"	f
 splitTop	ocr.h	/^	int splitTop, splitBottom; \/\/ boolean: artificially split at top or bottom$/;"	m	struct:__anon1
 splitWideGlyphs	segment.c	/^void splitWideGlyphs() {$/;"	f
 splittable	main.c	/^float splittable = SPLITTABLE;$/;"	v
-swap	kd.c	238;"	d	file:
+swap	kd.c	241;"	d	file:
 swap	p_kd.c	227;"	d	file:
 templateData	template.c	/^char *templateData[MAXTEMPLATES];$/;"	v
 templateDataCount	template.c	/^int templateDataCount;$/;"	v

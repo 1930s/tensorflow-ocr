@@ -178,21 +178,20 @@ const char *ocrValue(tuple_t tuple) {
 	bucket_t *bucket;
 	int index;
 
-	//	printf("MEOWWWWWWW\n");
-	//	return(OCRFAILS);
+	//system("python helloworld.py");
 
-	//fprintf(stdout, "%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",tuple);
+	closestMatch(categorization, tuple, &bucket, &index, BIGDIST);
 
 	if(doTensorFlow){
 		for(int i=0; i<27; i++)
 			fprintf(stdout, "%f, %s", tuple[i], " ");
+	        if (distSquared(tuple, bucket->key[index]) <= minMatch*minMatch) 
+			fprintf(stdout, "%s", bucket->values[index], " ");
+		else
+			fprintf(stdout, "%s", "XX", " "); 
 		fprintf(stdout, "%s", "\n");
 	}
 
-
-	//system("python helloworld.py");
-
-	closestMatch(categorization, tuple, &bucket, &index, BIGDIST);
 	if (index == -1) return("·"); // empty tree
 	if (distSquared(tuple, bucket->key[index]) <= minMatch*minMatch) {
 		//printf("%s", bucket->values[index]);
@@ -200,6 +199,10 @@ const char *ocrValue(tuple_t tuple) {
 	} else {
 		return(OCRFAILS);
 	}
+
+
+
+
 	//fclose(fp);
 } // ocrValue
 
