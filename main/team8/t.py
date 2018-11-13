@@ -138,6 +138,11 @@ for line in file_test:
 with tf.Session() as sess:
   # Start populating the filename queue.
 
+  #Used for averaging multiple test trials
+  all_trials_total_correct = 0
+  all_trials_total_total = 0
+
+  for iter in range(0,5):
     #This is basically the function that creates the neural network and all its magical juicy insides
     model = keras.Sequential([
       keras.layers.Dense(512, input_shape=(27,), activation=tf.nn.relu), 
@@ -151,32 +156,38 @@ with tf.Session() as sess:
               metrics=['accuracy'])
 
     #Training here. Epochs are the number of runs. Batch size isn't necessary but another parameter I've been experimenting with that seems to improve performance
-    model.fit(np.array(tupleArray), flowy_labels, epochs=100, batch_size=64)
-    #model.fit(tupleArray, flowy_labels, epochs=400)
+#    model.fit(np.array(tupleArray), flowy_labels, epochs=55, batch_size=128)
+    model.fit(np.array(tupleArray), flowy_labels, epochs=20)
 
     #Testing the training data here
     test_loss, test_acc = model.evaluate(tupleArray, flowy_labels)
-    print('Test accuracy:', test_acc)
+#    print('Test accuracy:', test_acc)
 
     #And this is the function that predicts the new test data
     predictions = model.predict(testmatrix)
 
     #Printing the first 100 characters in the document: actual vs expected
-    for i in range(0,100):    
-      print("Actual: ", sorted_labels_arr[np.argmax(predictions[i])])
-      print("Expected: ",testlabels_arr[i])
-      print()
+#    for i in range(0,100):    
+#      print("Actual: ", sorted_labels_arr[np.argmax(predictions[i])])
+#      print("Expected: ",testlabels_arr[i])
+#      print()
 
     #Figuring out the percentage of correct characters within the entire document
     total = len(testlabels_arr)
+    adjusted_total = total
     correct = 0
     for i in range(0,len(testlabels_arr)):
-      if(sorted_labels_arr[np.argmax(predictions[i])]==testlabels_arr[i]):
+      if(testlabels_arr[i]=='XX'):
+        adjusted_total-=1
+      elif(sorted_labels_arr[np.argmax(predictions[i])]==testlabels_arr[i]):
         correct+=1
-
+    all_trials_total_total = adjusted_total*5
+    all_trials_total_correct += correct
     print("Percentage correct: ")
-    print(100.0*correct/total)
+    print(100.0*correct/adjusted_total)
     print(correct, "Correct")
+    print(adjusted_total, "Adjusted Total")
     print(total, "Total")
 
-    #print(meow.shape)    
+  print(100.0*all_trials_total_correct/all_trials_total_total, "% accuracy over 5 trials")
+  #print(meow.shape)    
