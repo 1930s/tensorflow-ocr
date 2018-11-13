@@ -17,8 +17,8 @@ print(sess2.run(hello))
 # sorted_labels_arr: the finalized array of all the labels in the correct order
 # flowy_labels: a NumPy of the integers associated with those values fed into TensorFlow
 
-file = open("../fontData/kafka.data", "r")
-#file = open("../fontData/bashevis.data", "r")
+#file = open("../fontData/kafka.data", "r")
+file = open("../fontData/bashevis.data", "r")
 labels_arr = []
 lineCounter = 0
 
@@ -62,8 +62,8 @@ flowy_labels = np.array(numeric_labels_arr)
 
 #Blake's code
 #simply goes through the .data file and pushes each glyph into tuples
-filename = '../fontData/kafka.data'
-#filename = '../fontData/bashevis.data'
+#filename = '../fontData/kafka.data'
+filename = '../fontData/bashevis.data'
 file = open(filename, "r")
 
 tupleArray = []
@@ -97,8 +97,8 @@ for line in file:
 # testmatrix: the list of test glyphs
 # testlabels_arr: the list of correct characters that are supposed to be associated with those glyphs
 
-filename_test = '../tmp.out'
-#filename_test = '../tmp2.out'
+#filename_test = '../tmp.out'
+filename_test = '../tmp2.out'
 file_test = open(filename_test, "r")
 
 linecount = len(open(filename_test).readlines( ))
