@@ -160,17 +160,17 @@ with tf.Session() as sess:
     model.fit(np.array(tupleArray), flowy_labels, epochs=20)
 
     #Testing the training data here
-    test_loss, test_acc = model.evaluate(tupleArray, flowy_labels)
+    test_loss, test_acc = model.evaluate(np.array(tupleArray), flowy_labels)
 #    print('Test accuracy:', test_acc)
 
     #And this is the function that predicts the new test data
     predictions = model.predict(testmatrix)
 
     #Printing the first 100 characters in the document: actual vs expected
-#    for i in range(0,100):    
-#      print("Actual: ", sorted_labels_arr[np.argmax(predictions[i])])
-#      print("Expected: ",testlabels_arr[i])
-#      print()
+    for i in range(0,100):    
+      print("Actual: ", sorted_labels_arr[np.argmax(predictions[i])])
+      print("Expected: ",testlabels_arr[i])
+      print()
 
     #Figuring out the percentage of correct characters within the entire document
     total = len(testlabels_arr)
