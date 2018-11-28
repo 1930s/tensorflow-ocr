@@ -20,6 +20,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <math.h>
 #include "ocr.h"
+#include <stdio.h>
+#include <unistd.h>
+
+//int count = 0;
 
 kd_node_t *categorization; // the root
 int RTL;
@@ -175,22 +179,66 @@ float ocrDistance2(tuple_t tuple) { // returns square of distance
 } // ocrDistance
 
 const char *ocrValue(tuple_t tuple) {
+
+	//create array
+	/*
+	float tuple_arr[27];
+	for(int i=0; i<27; i++)	{
+		tuple_arr[i] = 0.0;}
+	tuple_arr[27] = '\0';
+	*/
+
 	bucket_t *bucket;
 	int index;
 
 	//system("python helloworld.py");
 
-	closestMatch(categorization, tuple, &bucket, &index, BIGDIST);
-
+	closestMatch(categorization, tuple, &bucket, &index, BIGDIST); //where nearest neighbor makes the prediction
+	/*
 	if(doTensorFlow){
-		for(int i=0; i<27; i++)
-			fprintf(stdout, "%f, %s", tuple[i], " ");
-	        if (distSquared(tuple, bucket->key[index]) <= minMatch*minMatch) 
+		for(int i=0; i<27; i++)//training data
+			fprintf(stdout, "%f, %s", tuple[i], " "); 
+	        if (distSquared(tuple, bucket->key[index]) <= minMatch*minMatch) //testing data 
 			fprintf(stdout, "%s", bucket->values[index], " ");
-		else
+		else //testing data with unknown char
 			fprintf(stdout, "%s", "XX", " "); 
 		fprintf(stdout, "%s", "\n");
+	
+	
 	}
+	*/
+	
+	if(doTensorFlow)
+	{	
+	
+			
+
+		execvp("test.py", tuple);
+		
+		for(int i=0; i<27; i++)
+			fprintf(stdout, "%f, %s", tuple[i], " ");
+			//tuple_arr[i] = tuple[i];
+		fprintf(stdout, "%s", "\n");
+	
+
+		//fprintf(fp, "%s", "TEST\n");
+		/*
+		if(distSquared(tuple, bucket->key[index]) <= minMatch*minMatch){
+			//fprintf(fp, "TESTEST\n");
+			return(bucket->values[index]);}
+		else{
+			return (OCRFAILS);
+		}
+		*/
+			
+	}
+		
+	else{
+
+		//closestMatch(categorization, tuple, &bucket, &index, BIGDIST); //where nearest neighbor makes the prediction
+	}
+	
+
 
 	if (index == -1) return("·"); // empty tree
 	if (distSquared(tuple, bucket->key[index]) <= minMatch*minMatch) {
@@ -201,7 +249,7 @@ const char *ocrValue(tuple_t tuple) {
 	}
 
 
-
+	//count = count+1;
 
 	//fclose(fp);
 } // ocrValue
