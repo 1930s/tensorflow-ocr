@@ -114,14 +114,14 @@ testlabel = []
 #Fun parsy times inside this loop
 #rowcount = 0
 #for line in file_test:
-#  colcount = 0
+colcount = 0
 testlabel = ""
-for place in range(0, len(line)):
-  if(line[place]=="," and colcount<27):
+for place in range(0, len(input_tuple)):
+  if(input_tuple[place]=="," and colcount<27):
     colcount+=1
   elif(colcount==27):
-    if(line[place]!="\n" and line[place]!=" "):
-      testlabel+=line[place]
+    if(input_tuple[place]!="\n" and input_tuple[place]!=" "):
+      testlabel+=input_tuple[place]
 #testlabel.append(addystring)
 
 #print("Test Matrix gets tested here")

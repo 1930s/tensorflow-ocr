@@ -208,16 +208,48 @@ const char *ocrValue(tuple_t tuple) {
 	*/
 
 	if(doTensorFlow)
-	{
+	{	/*
+		for(int i=0; i<27; i++)
+		{	
+			char * tuple_char[27];
+			memset(tuple_char, '\0', 27);
+			strcpy(tuple_char[i], tuple[i]);
+		}	
+		*/
 
+		char all_tuples_char[1000];
+		memset(all_tuples_char, '\0', 1000);	
+		for(int i=0; i<27; i++)
+		{
+			//memset(all_tuples_char, '\0', 1000);	
+			char tuple_char[11];
+			gcvt(tuple[i], 7, tuple_char);
+			strncat(tuple_char, ",", 1);
+			//printf("tuple char is: %s\n", tuple_char);
+			strncat(all_tuples_char, tuple_char, 11);
+			//strcat(all_tuples_char, ",");
+		}
+		
+		FILE *fp;
+		char path[1035];
+		fp = popen("python t2.py fontData/kafka.data tmp.out", "r");
+	
+		while(fgets(path, sizeof(path), fp) != NULL)
+		{
+			printf("C received %s\n", path);	
+		}	
+		//printf("all tuples array %s\n", all_tuples_char);		
 
+	
+		/*
 		//execvp("test.py", tuple);
 		char *arglist[5];
 		arglist[0]="python";
 		arglist[1]="t2.py";
-		arglist[2]="fontData/bashevis.data";
-		arglist[3]=tuple[i];
+		arglist[2]="fontData/kafka.data";
+		arglist[3]=all_tuples_char;
 		arglist[4]=NULL;
+		
 
 		pid_t pid = fork();
 		if(pid==0)
@@ -225,6 +257,8 @@ const char *ocrValue(tuple_t tuple) {
 			execvp("python", arglist);
 			fprintf(stdout, "hiiiiiii");
 		}
+		*/
+
 
 		for(int i=0; i<27; i++)
 			fprintf(stdout, "%f, %s", tuple[i], " ");
