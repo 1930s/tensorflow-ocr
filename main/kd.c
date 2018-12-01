@@ -180,6 +180,9 @@ float ocrDistance2(tuple_t tuple) { // returns square of distance
 
 const char *ocrValue(tuple_t tuple) {
 
+	bucket_t *bucket;
+	int index;
+
 	//create array
 	/*
 	float tuple_arr[27];
@@ -188,12 +191,10 @@ const char *ocrValue(tuple_t tuple) {
 	tuple_arr[27] = '\0';
 	*/
 
-	bucket_t *bucket;
-	int index;
-
 	//system("python helloworld.py");
 
 	closestMatch(categorization, tuple, &bucket, &index, BIGDIST); //where nearest neighbor makes the prediction
+
 	/*
 	if(doTensorFlow){
 		for(int i=0; i<27; i++)//training data
@@ -203,23 +204,31 @@ const char *ocrValue(tuple_t tuple) {
 		else //testing data with unknown char
 			fprintf(stdout, "%s", "XX", " "); 
 		fprintf(stdout, "%s", "\n");
-	
-	
 	}
 	*/
-	
-	if(doTensorFlow)
-	{	
-	
-			
 
-		execvp("test.py", tuple);
-		
+	if(doTensorFlow)
+	{
+
+
+		//execvp("test.py", tuple);
+		char *arglist[3];
+		arglist[0]="python";
+		arglist[1]="hello.py";
+		arglist[2]=tuple[i];
+		arglist[3]=NULL;
+
+		pid_t pid = fork();
+		if(pid==0)
+		{
+			execvp("python", arglist);
+			fprintf(stdout, "hiiiiiii");
+		}
+
 		for(int i=0; i<27; i++)
 			fprintf(stdout, "%f, %s", tuple[i], " ");
 			//tuple_arr[i] = tuple[i];
 		fprintf(stdout, "%s", "\n");
-	
 
 		//fprintf(fp, "%s", "TEST\n");
 		/*
@@ -230,14 +239,14 @@ const char *ocrValue(tuple_t tuple) {
 			return (OCRFAILS);
 		}
 		*/
-			
+
 	}
-		
+
 	else{
 
 		//closestMatch(categorization, tuple, &bucket, &index, BIGDIST); //where nearest neighbor makes the prediction
 	}
-	
+
 
 
 	if (index == -1) return("·"); // empty tree

@@ -708,3 +708,6 @@ quickkafka-t:
 
 tensor-b:
 	python team8/t.py fontData/bashevis.data bashevis.out
+
+tensor-g:
+	python team8/t.py groyse-verterbukh-yi-27.data groyse1.out
