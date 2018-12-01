@@ -212,11 +212,12 @@ const char *ocrValue(tuple_t tuple) {
 
 
 		//execvp("test.py", tuple);
-		char *arglist[3];
+		char *arglist[5];
 		arglist[0]="python";
-		arglist[1]="hello.py";
-		arglist[2]=tuple[i];
-		arglist[3]=NULL;
+		arglist[1]="t2.py";
+		arglist[2]="fontData/bashevis.data";
+		arglist[3]=tuple[i];
+		arglist[4]=NULL;
 
 		pid_t pid = fork();
 		if(pid==0)
