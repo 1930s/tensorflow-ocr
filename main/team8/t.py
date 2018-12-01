@@ -5,6 +5,7 @@ import tensorflow as tf
 import numpy as np
 import numbers
 import decimal
+import sys
 
 #HelloWorld
 hello = tf.constant('Hello, TensorFlow!')
@@ -18,7 +19,9 @@ print(sess2.run(hello))
 # flowy_labels: a NumPy of the integers associated with those values fed into TensorFlow
 
 #file = open("../fontData/kafka.data", "r")
-file = open("../fontData/bashevis.data", "r")
+#file = open("../fontData/bashevis.data", "r")
+fname = sys.argv[1]
+file = open(fname, "r")
 labels_arr = []
 lineCounter = 0
 
@@ -63,7 +66,8 @@ flowy_labels = np.array(numeric_labels_arr)
 #Blake's code
 #simply goes through the .data file and pushes each glyph into tuples
 #filename = '../fontData/kafka.data'
-filename = '../fontData/bashevis.data'
+#filename = '../fontData/bashevis.data'
+filename = sys.argv[1]
 file = open(filename, "r")
 
 tupleArray = []
@@ -98,7 +102,8 @@ for line in file:
 # testlabels_arr: the list of correct characters that are supposed to be associated with those glyphs
 
 #filename_test = '../tmp.out'
-filename_test = '../tmp2.out'
+#filename_test = '../bashevis.out'
+filename_test = sys.argv[2]
 file_test = open(filename_test, "r")
 
 linecount = len(open(filename_test).readlines( ))

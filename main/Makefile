@@ -706,3 +706,5 @@ quickkafka-t:
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
 
+tensor-b:
+	python team8/t.py fontData/bashevis.data bashevis.out
