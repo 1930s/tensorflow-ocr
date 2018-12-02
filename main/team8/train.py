@@ -48,12 +48,6 @@ for value in labels_arr:
 flowy_labels = np.array(numeric_labels_arr)
 
 ###############################################
-
-#filenames = tf. train.string_input_producer(["./k3.csv"]);
-#reader = tf.TextLineReader()
-#key, value = reader.read(filenames)
-
-###############################################
 # Creating the training data
 # tupleArray: the array of training glyphs
 
@@ -116,21 +110,13 @@ with tf.Session() as sess:
               metrics=['accuracy'])
 
     #Training here. Epochs are the number of runs. Batch size isn't necessary but another parameter I've been experimenting with that seems to improve performance
-#    model.fit(np.array(tupleArray), flowy_labels, epochs=55, batch_size=128)
     model.fit(np.array(tupleArray), flowy_labels, epochs=20)
 
     #Testing the training data here
     test_loss, test_acc = model.evaluate(np.array(tupleArray), flowy_labels)
-#    print('Test accuracy:', test_acc)
 
     #And this is the function that predicts the new test data
     predictions = model.predict(testmatrix)
-
-    #Printing the first 100 characters in the document: actual vs expected
-#    for i in range(0,100):    
-#      print("Actual: ", sorted_labels_arr[np.argmax(predictions[i])])
-#      print("Expected: ",testlabels_arr[i])
-#      print()
 
     #Figuring out the percentage of correct characters within the entire document
     total = len(testlabels_arr)
@@ -149,5 +135,4 @@ with tf.Session() as sess:
     print(adjusted_total, "Adjusted Total")
     print(total, "Total")
 
-  print(100.0*all_trials_total_correct/all_trials_total_total, "% accuracy over 5 trials")
-  #print(meow.shape)    
+  print(100.0*all_trials_total_correct/all_trials_total_total, "% accuracy over 5 trials")   
