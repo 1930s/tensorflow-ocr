@@ -1,9 +1,10 @@
 import sys
+import numpy as np
 import os
 
 #simply goes through the .data file and pushes each glyph into tuples
 def parseFileArray(filename):
-  
+
   file_to_read = open(filename, "r")
   tupleArray = []
 
@@ -11,13 +12,13 @@ def parseFileArray(filename):
   for line in file_to_read:
     tupleArray.append([])
     start = 0 #reset start of line range
-    
-    for digit in range(0, len(line)):
+
+    for digit in range(0, len(line)-1):
       if(line[digit] == " " or line[digit] == "\n" and start <= digit): #look for a divider
         tupleArray[lineCounter].append(line[start:digit]) #adds value into the tuple
         #tupleArray[lineCounter][int(math.floor(digit/valDivisor))] = line[start:digit] #insert new value to tupleArray[0][0] for example
         start = digit+1 #set previous line range to previous divider, +1 so its not on the " "
-    
+
     lineCounter += 1 #we are on the next line for reading
 
     #file_to_read.close() #close file for safety
@@ -26,7 +27,7 @@ def parseFileArray(filename):
 
 #converts a .data file into a .csv file
 def parseFileCSV(filename, newfile):
-  
+
   directory = "CSV_Data"
 
   if not os.path.exists(directory): #create file directory it it doesnt exist already
@@ -46,7 +47,7 @@ def parseFileCSV(filename, newfile):
 
 #simply pulls the end of each tupleArray in the 2D list, ignoring the data beforehand
 def pullLabels(tupleArray):
-  
+
   tuplesLen = len(tupleArray)
   tupleArrayLen = len(tupleArray[0]) #0 because the len of each array in the 2D set is the same
 
@@ -55,6 +56,25 @@ def pullLabels(tupleArray):
     labels.append(array[tupleArrayLen-1])
 
   return labels
+
+def charToInt27(filename):
+
+  file_to_read = open(filename, "r")
+  labels_arr = []
+  lineCounter = 0
+
+
+  for line in file_to_read:
+    start = 0 #reset start of line range
+    for symbol in range(0, len(line)-1):
+      if(symbol == 161):
+        letter = line[162:len(line)-1]
+        labels_arr.append(letter)
+    lineCounter += 1 #we are on the next line for reading
+
+  file_to_read.close()
+
+  return labels_arr
 
 
 def main():
@@ -77,4 +97,4 @@ def main():
   return
 
 
-main()
+#main()
