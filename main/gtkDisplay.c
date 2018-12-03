@@ -627,3 +627,4 @@ void GUI(int col) {
 	}
 	// gtk_widget_destroy(mainBox);
 } // GUI
+

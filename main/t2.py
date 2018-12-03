@@ -6,6 +6,7 @@ import numpy as np
 import numbers
 import decimal
 import sys
+import fileinput
 
 #HelloWorld
 hello = tf.constant('Hello, TensorFlow!')
@@ -103,25 +104,27 @@ for line in file:
 
 #filename_test = '../tmp.out'
 #filename_test = '../bashevis.out'
-input_tuple = sys.argv[2]
+###########NOTEEYYYYinput_tuple = sys.argv[2]
+#for line in fileinput.input():
+    
 #file_test = open(filename_test, "r")
 
 #linecount = len(open(filename_test).readlines( ))
 
 #testmatrix = np.zeros(shape=(linecount, 27))
-testlabel = []
+    testlabel = []
 
 #Fun parsy times inside this loop
 #rowcount = 0
 #for line in file_test:
-colcount = 0
-testlabel = ""
-for place in range(0, len(input_tuple)):
-  if(input_tuple[place]=="," and colcount<27):
-    colcount+=1
-  elif(colcount==27):
-    if(input_tuple[place]!="\n" and input_tuple[place]!=" "):
-      testlabel+=input_tuple[place]
+#    colcount = 0
+#    testlabel = ""
+#    for place in range(0, len(line)):
+#        if(line[place]=="," and colcount<27):
+#            colcount+=1
+#        elif(colcount==27):
+#            if(line[place]!="\n" and line[place]!=" "):
+#                testlabel+=line[place]
 #testlabel.append(addystring)
 
 #print("Test Matrix gets tested here")
@@ -140,7 +143,7 @@ for place in range(0, len(input_tuple)):
 
 with tf.Session() as sess:
   # Start populating the filename queue.
-
+  
   #Used for averaging multiple test trials
   all_trials_total_correct = 0
   all_trials_total_total = 0
@@ -167,10 +170,34 @@ with tf.Session() as sess:
 #    print('Test accuracy:', test_acc)
 
     #And this is the function that predicts the new test data
+    for line in fileinput.input():
+        print("LINE IS ", line)
+    #output = file.stdout.read();
+    #print (output)
+    #for output in file.stdout.readlines():
+#file_test = open(filename_test, "r")
+
+#linecount = len(open(filename_test).readlines( ))
+
+#testmatrix = np.zeros(shape=(linecount, 27))
+        testlabel = []
+
+#Fun parsy times inside this loop
+#rowcount = 0
+#for line in file_test:
+        colcount = 0
+        testlabel = ""
+        for place in range(0, len(line)):
+            if(line[place]=="," and colcount<27):
+                colcount+=1
+            elif(colcount==27):
+                if(line[place]!="\n" and line[place]!=" "):
+                    testlabel+=line[place]
 
     #predictions = model.predict(testmatrix)
-    prediction = model.predict(testlabel)
-    print("Prediction: ", prediction)
+        print("TESTYTEST", testlabel)
+        prediction = model.predict(np.array(testlabel))
+        print(prediction)
 
     #Printing the first 100 characters in the document: actual vs expected
     #for i in range(0,100):    

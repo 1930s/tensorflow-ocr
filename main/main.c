@@ -221,7 +221,29 @@ while (optind < argc) { // each TIFF file
 	do {
 		// printf("reading picture\n");
 		if(!doTensorFlow)
+
 			fprintf(stdout, "%s\n", fileBase);
+		else
+		{
+			FILE *fp;
+			char path[100];
+			//fp = popen("python t2.py fontData/kafka.data", "r");
+			fp = popen("python t2.py", "r");
+			if (fp == NULL)
+			{
+			 	fprintf(stderr, "Sorry we're dumb.");
+			}
+			while (fgets(path, 100, fp) != NULL)
+				printf("%s", path);
+
+			if(pclose(fp) == -1)
+			{
+				fprintf(stderr, "Again, sorry we're dumb.");
+			}
+			else
+			{
+			}
+		}	
 		fprintf(stderr, "%s\n", fileBase);
 		readPicture();
 		if (!noShear) shearPicture();

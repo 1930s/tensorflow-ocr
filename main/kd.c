@@ -216,7 +216,8 @@ const char *ocrValue(tuple_t tuple) {
 			strcpy(tuple_char[i], tuple[i]);
 		}	
 		*/
-
+	
+		/*	
 		char all_tuples_char[1000];
 		memset(all_tuples_char, '\0', 1000);	
 		for(int i=0; i<27; i++)
@@ -239,7 +240,7 @@ const char *ocrValue(tuple_t tuple) {
 			printf("C received %s\n", path);	
 		}	
 		//printf("all tuples array %s\n", all_tuples_char);		
-
+		*/
 	
 		/*
 		//execvp("test.py", tuple);
@@ -259,11 +260,14 @@ const char *ocrValue(tuple_t tuple) {
 		}
 		*/
 
-
+	//	fprintf(stdout, "%s", "THIS IS A TESTTTTTT");
+		//HERE
+		
 		for(int i=0; i<27; i++)
 			fprintf(stdout, "%f, %s", tuple[i], " ");
 			//tuple_arr[i] = tuple[i];
 		fprintf(stdout, "%s", "\n");
+	
 
 		//fprintf(fp, "%s", "TEST\n");
 		/*

@@ -19,9 +19,13 @@ print(sess2.run(hello))
 # flowy_labels: a NumPy of the integers associated with those values fed into TensorFlow
 
 #file = open("../fontData/kafka.data", "r")
+#<<<<<<< HEAD
 #file = open("../fontData/bashevis.data", "r")
 fname = sys.argv[1]
 file = open(fname, "r")
+=======
+file = open("../fontData/kafka.data", "r")
+>>>>>>> 99a5661fb34c9576b31e7a3402d53f199fb525ff
 labels_arr = []
 lineCounter = 0
 
@@ -66,8 +70,12 @@ flowy_labels = np.array(numeric_labels_arr)
 #Blake's code
 #simply goes through the .data file and pushes each glyph into tuples
 #filename = '../fontData/kafka.data'
+<<<<<<< HEAD
 #filename = '../fontData/bashevis.data'
 filename = sys.argv[1]
+=======
+filename = '../fontData/kafka.data'
+>>>>>>> 99a5661fb34c9576b31e7a3402d53f199fb525ff
 file = open(filename, "r")
 
 tupleArray = []
@@ -101,12 +109,20 @@ for line in file:
 # testmatrix: the list of test glyphs
 # testlabels_arr: the list of correct characters that are supposed to be associated with those glyphs
 
+<<<<<<< HEAD
 #filename_test = '../tmp.out'
 #filename_test = '../bashevis.out'
 filename_test = sys.argv[2]
 file_test = open(filename_test, "r")
+=======
+filename_test = '../tmp.out'
+#filename_test = '../tmp2.out'
+#file_test = open(filename_test, encoding='utf-8')
+file_test = open(filename_test, "r", encoding='utf-8')
+>>>>>>> 99a5661fb34c9576b31e7a3402d53f199fb525ff
 
 linecount = len(open(filename_test).readlines( ))
+print("Linecount: ", linecount)
 
 testmatrix = np.zeros(shape=(linecount, 27))
 testlabels_arr = []
@@ -126,6 +142,7 @@ for line in file_test:
   rowcount+=1
   testlabels_arr.append(addystring)
 
+print("Rowcount: ", rowcount);
 #print("Test Matrix gets tested here")
 #print(len(testlabels_arr))
 #print(testlabels_arr)
@@ -179,6 +196,7 @@ with tf.Session() as sess:
 
     #Figuring out the percentage of correct characters within the entire document
     total = len(testlabels_arr)
+    print("Total: ", total)
     adjusted_total = total
     correct = 0
     for i in range(0,len(testlabels_arr)):
@@ -196,3 +214,4 @@ with tf.Session() as sess:
 
   print(100.0*all_trials_total_correct/all_trials_total_total, "% accuracy over 5 trials")
   #print(meow.shape)    
+
