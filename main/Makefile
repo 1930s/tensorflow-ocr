@@ -705,9 +705,19 @@ quickkafka-t:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
+	python t.py fontData/kafka.data tmp.out
 
-tensor-b:
-	python team8/t.py fontData/bashevis.data bashevis.out
+quickkafka-t2:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
+	testtifs/kafka/xaaa.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
+	python t.py fontData/kafka.data tmp.out > tmp2.out
+	$(OCR) -f fontData/kafka.data $(KAFKA) -T2 tmp2.out -t \
+	testtifs/kafka/xaaa.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp3.out
 
-tensor-g:
-	python team8/t.py groyse-verterbukh-yi-27.data groyse1.out
+bashevis-t:
+	python t.py fontData/bashevis.data bashevis.out
+
+tensor-test:
+	python t3.py fontData/bashevis.data tmp2.out

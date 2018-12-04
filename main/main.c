@@ -44,6 +44,7 @@ int mayCombine = 1;
 int alwaysCombine = false;
 int minGlyphArea = 1;
 int doTensorFlow = 0;
+int printTensorFlowBatch = 0;
 
 static void usage() {
 fprintf(stderr,
@@ -74,7 +75,8 @@ fprintf(stderr,
 	"\t-A always combine horizontal overlaps, even if result is worse.\n"
 	"\t-i ignore glyph's vertical placement in matching glyphs\n"
 	"\t-d n minimum glyph area\n"
-	"\t-T enables TensorFlow algorithms in batch mode\n",
+	"\t-T enables TensorFlow\n",
+	"\t-B enables printing TensorFlow with output in batch mode\n",
 		MINGLYPHHEIGHT, MINGLYPHWIDTH, MAXGLYPHHEIGHT, MAXGLYPHWIDTH, MINMATCH,
 		GOODMATCH, SPLITTABLE, SPACEFRACTION, CUTOFF, SLANT
 	);
@@ -115,12 +117,14 @@ int main (int argc, char * const argv[]) {
 
 
 fontFile = NULL;
+tensorFile = NULL;
 int textOnly = false;
 setvbuf(stderr, NULL, _IONBF, 0); // stderr comes out immediately
 while (1) { // each option
 	static struct option longOptions[] = {
 		{"font", required_argument, 0, 0},
 		{"doTensorFlow", no_argument, 0, 0},
+		{"printTensorFlowOutput", required_argument, 0, 0},
 		{"textout", no_argument, 0, 0},
 		{"minHeight", required_argument, 0, 0},
 		{"minWidth", required_argument, 0, 0},
@@ -132,7 +136,7 @@ while (1) { // each option
 		{0, 0, 0, 0}
 	};
 	int optionIndex;
-	int c = getopt_long(argc, argv, "f:Tth:w:s:m:H:W:g:p:c:iSL:xC:XAd:",
+	int c = getopt_long(argc, argv, "f:TB:th:w:s:m:H:W:g:p:c:iSL:xC:XAd:",
 		longOptions, &optionIndex);
 	if (c == -1) break; // no more options
 	switch (c) {
@@ -200,8 +204,11 @@ while (1) { // each option
 			fprintf(stderr, "Minimum acceptable area %d\n", minGlyphArea);
 			break;
 		case 'T':
-			//fprintf(stdout, "Meowy McMeowskies\n");
 			doTensorFlow = 1; break;
+		case 'B':
+			printTensorFlowBatch = 1; 
+			tensorFile = optarg;
+			break;
 		case '?':
 			fprintf(stdout, "unrecognized option\n");
 			usage();
@@ -221,29 +228,31 @@ while (optind < argc) { // each TIFF file
 	do {
 		// printf("reading picture\n");
 		if(!doTensorFlow)
-
 			fprintf(stdout, "%s\n", fileBase);
-		else
-		{
-			FILE *fp;
-			char path[100];
-			//fp = popen("python t2.py fontData/kafka.data", "r");
-			fp = popen("python t2.py", "r");
-			if (fp == NULL)
-			{
-			 	fprintf(stderr, "Sorry we're dumb.");
-			}
-			while (fgets(path, 100, fp) != NULL)
-				printf("%s", path);
 
-			if(pclose(fp) == -1)
-			{
-				fprintf(stderr, "Again, sorry we're dumb.");
-			}
-			else
-			{
-			}
-		}	
+		/*
+		else{	//TensorFlow piping here
+                        FILE *fp;
+                        char path[275];
+                        fp = popen("python t4.py fontData/bashevis.data", "r");
+                        if (fp == NULL)
+                        {
+                                fprintf(stderr, "C <-> Python piping error!");
+                        }
+                        while (fgets(path, 5, fp) != NULL) //5 seems like good max len for predicted char
+                                printf("%s", path);
+
+                        if(pclose(fp) == -1)
+                        {
+                                fprintf(stderr, "C <-> Python piping error!!");
+                        }
+                        else
+                        {
+				fprintf(stderr, "C <-> Python piping error!!!");
+                        }
+		}
+		*/
+
 		fprintf(stderr, "%s\n", fileBase);
 		readPicture();
 		if (!noShear) shearPicture();
@@ -277,6 +286,7 @@ while (optind < argc) { // each TIFF file
 			// simpleTest();
 			int visual = 0;
 			// printf("displaying\n");
+			// here is -b flag
 			if (textOnly) {
 				displayText(NULL, &visual);
 			} else {
@@ -298,3 +308,4 @@ while (optind < argc) { // each TIFF file
 } // each file
 return(0);
 } // main
+

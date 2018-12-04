@@ -180,126 +180,43 @@ float ocrDistance2(tuple_t tuple) { // returns square of distance
 
 const char *ocrValue(tuple_t tuple) {
 
-	bucket_t *bucket;
-	int index;
+        bucket_t *bucket;
+        int index;
 
-	//create array
-	/*
-	float tuple_arr[27];
-	for(int i=0; i<27; i++)	{
-		tuple_arr[i] = 0.0;}
-	tuple_arr[27] = '\0';
-	*/
-
-	//system("python helloworld.py");
-
-	closestMatch(categorization, tuple, &bucket, &index, BIGDIST); //where nearest neighbor makes the prediction
-
-	/*
-	if(doTensorFlow){
-		for(int i=0; i<27; i++)//training data
-			fprintf(stdout, "%f, %s", tuple[i], " "); 
-	        if (distSquared(tuple, bucket->key[index]) <= minMatch*minMatch) //testing data 
-			fprintf(stdout, "%s", bucket->values[index], " ");
-		else //testing data with unknown char
-			fprintf(stdout, "%s", "XX", " "); 
-		fprintf(stdout, "%s", "\n");
-	}
-	*/
-
-	if(doTensorFlow)
-	{	/*
-		for(int i=0; i<27; i++)
-		{	
-			char * tuple_char[27];
-			memset(tuple_char, '\0', 27);
-			strcpy(tuple_char[i], tuple[i]);
-		}	
-		*/
-	
-		/*	
-		char all_tuples_char[1000];
-		memset(all_tuples_char, '\0', 1000);	
-		for(int i=0; i<27; i++)
-		{
-			//memset(all_tuples_char, '\0', 1000);	
-			char tuple_char[11];
-			gcvt(tuple[i], 7, tuple_char);
-			strncat(tuple_char, ",", 1);
-			//printf("tuple char is: %s\n", tuple_char);
-			strncat(all_tuples_char, tuple_char, 11);
-			//strcat(all_tuples_char, ",");
-		}
-		
-		FILE *fp;
-		char path[1035];
-		fp = popen("python t2.py fontData/kafka.data tmp.out", "r");
-	
-		while(fgets(path, sizeof(path), fp) != NULL)
-		{
-			printf("C received %s\n", path);	
-		}	
-		//printf("all tuples array %s\n", all_tuples_char);		
-		*/
-	
-		/*
-		//execvp("test.py", tuple);
-		char *arglist[5];
-		arglist[0]="python";
-		arglist[1]="t2.py";
-		arglist[2]="fontData/kafka.data";
-		arglist[3]=all_tuples_char;
-		arglist[4]=NULL;
-		
-
-		pid_t pid = fork();
-		if(pid==0)
-		{
-			execvp("python", arglist);
-			fprintf(stdout, "hiiiiiii");
-		}
-		*/
-
-	//	fprintf(stdout, "%s", "THIS IS A TESTTTTTT");
-		//HERE
-		
-		for(int i=0; i<27; i++)
-			fprintf(stdout, "%f, %s", tuple[i], " ");
-			//tuple_arr[i] = tuple[i];
-		fprintf(stdout, "%s", "\n");
-	
-
-		//fprintf(fp, "%s", "TEST\n");
-		/*
-		if(distSquared(tuple, bucket->key[index]) <= minMatch*minMatch){
-			//fprintf(fp, "TESTEST\n");
-			return(bucket->values[index]);}
-		else{
-			return (OCRFAILS);
-		}
-		*/
-
-	}
-
-	else{
-
-		//closestMatch(categorization, tuple, &bucket, &index, BIGDIST); //where nearest neighbor makes the prediction
-	}
+        closestMatch(categorization, tuple, &bucket, &index, BIGDIST); //where nearest neighbor makes the prediction
 
 
 
-	if (index == -1) return("·"); // empty tree
-	if (distSquared(tuple, bucket->key[index]) <= minMatch*minMatch) {
-		//printf("%s", bucket->values[index]);
-		return(bucket->values[index]);
-	} else {
-		return(OCRFAILS);
-	}
+        if(doTensorFlow)
+        {
+                //Original working code for t.py
+                for(int i=0; i<27; i++)
+                        fprintf(stdout, "%f, %s", tuple[i], " ");
+                if (distSquared(tuple, bucket->key[index]) <= minMatch*minMatch)
+                        fprintf(stdout, "%s", bucket->values[index], " ");
+                else
+                        fprintf(stdout, "%s", "XX", " ");
+                fprintf(stdout, "%s", "\n");
 
+                //for(int i=0; i<27; i++)
+                //      fprintf(stdout, "%f, %s", tuple[i], " ");
+                //      //tuple_arr[i] = tuple[i];
+                //fprintf(stdout, "%s", "\n");
 
-	//count = count+1;
+        }
 
-	//fclose(fp);
+        if (index == -1) return("·"); // empty tree
+        if (distSquared(tuple, bucket->key[index]) <= minMatch*minMatch) {
+                //printf("%s", bucket->values[index]);
+                return(bucket->values[index]);
+        } else {
+                return(OCRFAILS);
+        }
+
+        //count = count+1;
+
+        //fclose(fp);
+
 } // ocrValue
 
 int maxSpreadDimension(tuple_t *key, int count) {
