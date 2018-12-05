@@ -746,7 +746,7 @@ quickkafka-test:
 
 #Tester helper functions
 meow:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -B tmp2.out -t \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -B tensorTmp/tensorOutput.txt -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
@@ -760,3 +760,6 @@ meow3:
 
 meow4:
 	python t.py fontData/kafka.data kafka1.out
+
+meow5:
+	python t5.py fontData/kafka.data kafka1.out
