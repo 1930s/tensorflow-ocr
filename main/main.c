@@ -253,6 +253,7 @@ while (optind < argc) { // each TIFF file
 		}
 		*/
 
+
 		fprintf(stderr, "%s\n", fileBase);
 		readPicture();
 		if (!noShear) shearPicture();
