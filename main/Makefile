@@ -690,7 +690,7 @@ kafka-b:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -t \
 	testtifs/kafka/*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
-
+#A full TensorFlow implementation on a multipage document, start to finish
 kafka-t:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/*.tif | \
@@ -700,18 +700,26 @@ kafka-t:
 	testtifs/kafka/*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
+#Just the Testing Data. Contingent upon completion of training in kafka-t stored in k2.out
+kafka-t-test:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -B k2.out -t \
+	testtifs/kafka/*.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
+#A quick print of the first page of Metamorphosis in Batch Mode
 quickkafka-b:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl 
 
+#This can be used as a first step to TensorFlow with Batch Mode. It runs the training data, and can subsequently process test data
 quickkafka-t:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
 	python tensorPredictions.py fontData/kafka.data tmp.out
 
+#This is the full script needed to run TensorFlow with Batch Mode output, start to finish
 quickkafka-t2:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/xaaa.tif | \
@@ -721,29 +729,34 @@ quickkafka-t2:
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
+#Testing basic functionality of tensorPredictions.py
 bashevis-t:
 	python t.py fontData/bashevis.data bashevis.out
 
+#Testing the basic functionality of tensorPredictions.py
 tensor-test:
 	python tensorPredictions.py fontData/bashevis.data bashevis.out
 
+#Just getting the .out file needed for Training Data for Kafka
 quickkafka-test:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
 
-test:
+
+#Tester helper functions
+meow:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -B tmp2.out -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
-fulltest:
+meow2:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -B tmp2.out -t \
 	testtifs/kafka/*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
-test2:
-	python tensorPredictions.py fontData/kafka.data tmp2.out
+meow3:
+	python tensorPredictions.py fontData/kafka.data kafka1.out
 
-test3:
+meow4:
 	python t.py fontData/kafka.data kafka1.out
