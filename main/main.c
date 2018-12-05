@@ -44,7 +44,7 @@ int mayCombine = 1;
 int alwaysCombine = false;
 int minGlyphArea = 1;
 int doTensorFlow = 0;
-int printTensorFlowBatch = 0;
+int printTensorFlow = 0;
 
 static void usage() {
 fprintf(stderr,
@@ -75,7 +75,7 @@ fprintf(stderr,
 	"\t-A always combine horizontal overlaps, even if result is worse.\n"
 	"\t-i ignore glyph's vertical placement in matching glyphs\n"
 	"\t-d n minimum glyph area\n"
-	"\t-T enables TensorFlow\n",
+	"\t-T enables TensorFlow\n"
 	"\t-B enables printing TensorFlow with output in batch mode\n",
 		MINGLYPHHEIGHT, MINGLYPHWIDTH, MAXGLYPHHEIGHT, MAXGLYPHWIDTH, MINMATCH,
 		GOODMATCH, SPLITTABLE, SPACEFRACTION, CUTOFF, SLANT
@@ -115,16 +115,18 @@ printTree(categorization, -1, "full tree", 0);
 
 int main (int argc, char * const argv[]) {
 
-
 fontFile = NULL;
 tensorFile = NULL;
+
 int textOnly = false;
 setvbuf(stderr, NULL, _IONBF, 0); // stderr comes out immediately
 while (1) { // each option
+	fprintf(stdout, "MEOWWWW\n");
+
 	static struct option longOptions[] = {
 		{"font", required_argument, 0, 0},
 		{"doTensorFlow", no_argument, 0, 0},
-		{"printTensorFlowOutput", required_argument, 0, 0},
+		{"printTensorFlow", required_argument, 0, 0},
 		{"textout", no_argument, 0, 0},
 		{"minHeight", required_argument, 0, 0},
 		{"minWidth", required_argument, 0, 0},
@@ -206,8 +208,10 @@ while (1) { // each option
 		case 'T':
 			doTensorFlow = 1; break;
 		case 'B':
-			printTensorFlowBatch = 1; 
+			fprintf(stderr, "MEOWWWW\n");
+			printTensorFlow = 1; 
 			tensorFile = optarg;
+			fprintf(stderr, "MEOWWWW\n");
 			break;
 		case '?':
 			fprintf(stdout, "unrecognized option\n");
@@ -229,7 +233,6 @@ while (optind < argc) { // each TIFF file
 		// printf("reading picture\n");
 		if(!doTensorFlow)
 			fprintf(stdout, "%s\n", fileBase);
-
 		/*
 		else{	//TensorFlow piping here
                         FILE *fp;
@@ -287,7 +290,8 @@ while (optind < argc) { // each TIFF file
 			int visual = 0;
 			// printf("displaying\n");
 			// here is -b flag
-			if (textOnly) {
+			if(textOnly || printTensorFlow){
+				fprintf(stderr, "MEOWWWW2\n");
 				displayText(NULL, &visual);
 			} else {
 				redo = 0; // unless we learn otherwise.

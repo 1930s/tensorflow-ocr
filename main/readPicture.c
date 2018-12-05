@@ -26,6 +26,7 @@ char *image;
 tsize_t width, height;
 const char *fileBase = 0; // file name of picture (just the base part)
 const char *fontFile = 0; // file name of font data
+const char *tensorFile=0;
 
 // just for here
 uint32 *raster = NULL;

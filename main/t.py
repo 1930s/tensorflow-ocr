@@ -148,7 +148,7 @@ with tf.Session() as sess:
   all_trials_total_correct = 0
   all_trials_total_total = 0
 
-  for iter in range(0,5):
+  for iter in range(0,1):
     #This is basically the function that creates the neural network and all its magical juicy insides
     model = keras.Sequential([
       keras.layers.Dense(512, input_shape=(27,), activation=tf.nn.relu), 
@@ -163,7 +163,7 @@ with tf.Session() as sess:
 
     #Training here. Epochs are the number of runs. Batch size isn't necessary but another parameter I've been experimenting with that seems to improve performance
 #    model.fit(np.array(tupleArray), flowy_labels, epochs=55, batch_size=128)
-    model.fit(np.array(tupleArray), flowy_labels, epochs=20)
+    model.fit(np.array(tupleArray), flowy_labels, epochs=40)
 
     #Testing the training data here
     test_loss, test_acc = model.evaluate(np.array(tupleArray), flowy_labels)
@@ -173,10 +173,14 @@ with tf.Session() as sess:
     predictions = model.predict(testmatrix)
 
     #Printing the first 100 characters in the document: actual vs expected
-    for i in range(0,100):    
-      print("Actual: ", sorted_labels_arr[np.argmax(predictions[i])])
-      print("Expected: ",testlabels_arr[i])
-      print()
+    for i in range(0,len(predictions)):    
+      #print("Actual: ", sorted_labels_arr[np.argmax(predictions[i])])
+      #print("Expected: ",testlabels_arr[i])
+      actual = sorted_labels_arr[np.argmax(predictions[i])]
+      expected = testlabels_arr[i]
+      print(actual, expected)
+
+    print("A E")
 
     #Figuring out the percentage of correct characters within the entire document
     total = len(testlabels_arr)

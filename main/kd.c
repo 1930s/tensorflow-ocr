@@ -183,9 +183,8 @@ const char *ocrValue(tuple_t tuple) {
         bucket_t *bucket;
         int index;
 
-        closestMatch(categorization, tuple, &bucket, &index, BIGDIST); //where nearest neighbor makes the prediction
-
-
+	if(!printTensorFlow)
+        	closestMatch(categorization, tuple, &bucket, &index, BIGDIST); //where nearest neighbor makes the prediction
 
         if(doTensorFlow)
         {
@@ -202,11 +201,12 @@ const char *ocrValue(tuple_t tuple) {
                 //      fprintf(stdout, "%f, %s", tuple[i], " ");
                 //      //tuple_arr[i] = tuple[i];
                 //fprintf(stdout, "%s", "\n");
-
         }
 
+
         if (index == -1) return("·"); // empty tree
-        if (distSquared(tuple, bucket->key[index]) <= minMatch*minMatch) {
+
+	if (distSquared(tuple, bucket->key[index]) <= minMatch*minMatch) {
                 //printf("%s", bucket->values[index]);
                 return(bucket->values[index]);
         } else {

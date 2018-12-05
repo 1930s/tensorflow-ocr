@@ -705,19 +705,40 @@ quickkafka-t:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
-	python t.py fontData/kafka.data tmp.out
+	python tensorPredictions.py fontData/kafka.data tmp.out
 
 quickkafka-t2:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
-	python t.py fontData/kafka.data tmp.out > tmp2.out
-	$(OCR) -f fontData/kafka.data $(KAFKA) -T2 tmp2.out -t \
+	python tensorPredictions.py fontData/kafka.data tmp.out > \tmp2.out
+	$(OCR) -f fontData/kafka.data $(KAFKA) -B tmp2.out -t \
 	testtifs/kafka/xaaa.tif | \
-		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp3.out
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
 bashevis-t:
 	python t.py fontData/bashevis.data bashevis.out
 
 tensor-test:
-	python t3.py fontData/bashevis.data tmp2.out
+	python tensorPredictions.py fontData/bashevis.data bashevis.out
+
+quickkafka-test:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
+	testtifs/kafka/xaaa.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
+
+test:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -B tmp2.out -t \
+	testtifs/kafka/xaaa.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
+
+fulltest:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -B tmp2.out -t \
+	testtifs/kafka/*.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
+
+test2:
+	python tensorPredictions.py fontData/kafka.data tmp2.out
+
+test3:
+	python t.py fontData/kafka.data kafka1.out
