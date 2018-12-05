@@ -45,6 +45,7 @@ int alwaysCombine = false;
 int minGlyphArea = 1;
 int doTensorFlow = 0;
 int printTensorFlow = 0;
+int guiTensorFlow = 0;
 
 static void usage() {
 fprintf(stderr,
@@ -96,6 +97,8 @@ return;
 // readTree(); // get training data
 bucket_t *bucket;
 int index;
+
+
 glyph_t *glyph = lineHeaders->next->line->glyphs;
 for (index = 0; index < 8; index += 1) {
 	glyph = glyph->next;
@@ -137,7 +140,7 @@ while (1) { // each option
 		{0, 0, 0, 0}
 	};
 	int optionIndex;
-	int c = getopt_long(argc, argv, "f:TB:th:w:s:m:H:W:g:p:c:iSL:xC:XAd:",
+	int c = getopt_long(argc, argv, "f:TP:th:w:s:m:H:W:g:p:c:iSL:xC:XAd:",
 		longOptions, &optionIndex);
 	if (c == -1) break; // no more options
 	switch (c) {
@@ -206,7 +209,7 @@ while (1) { // each option
 			break;
 		case 'T':
 			doTensorFlow = 1; break;
-		case 'B':
+		case 'P':
 			printTensorFlow = 1; 
 			tensorFile = optarg;
 			break;
@@ -230,28 +233,6 @@ while (optind < argc) { // each TIFF file
 		// printf("reading picture\n");
 		if(!doTensorFlow)
 			fprintf(stdout, "%s\n", fileBase);
-		/*
-		else{	//TensorFlow piping here
-                        FILE *fp;
-                        char path[275];
-                        fp = popen("python t4.py fontData/bashevis.data", "r");
-                        if (fp == NULL)
-                        {
-                                fprintf(stderr, "C <-> Python piping error!");
-                        }
-                        while (fgets(path, 5, fp) != NULL) //5 seems like good max len for predicted char
-                                printf("%s", path);
-
-                        if(pclose(fp) == -1)
-                        {
-                                fprintf(stderr, "C <-> Python piping error!!");
-                        }
-                        else
-                        {
-				fprintf(stderr, "C <-> Python piping error!!!");
-                        }
-		}
-		*/
 
 
 		fprintf(stderr, "%s\n", fileBase);
@@ -288,7 +269,7 @@ while (optind < argc) { // each TIFF file
 			int visual = 0;
 			// printf("displaying\n");
 			// here is -b flag
-			if(textOnly || printTensorFlow){
+			if(textOnly){
 				displayText(NULL, &visual);
 			} else {
 				redo = 0; // unless we learn otherwise.

@@ -686,23 +686,28 @@ kafka-i:
 	$(OCR) -f fontData/kafka.data $(KAFKA) \
 	testtifs/kafka/*.tif
 
+kafka-i2:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -I tensorOutput.txt \
+	testtifs/kafka/*.tif
+
 kafka-b:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -t \
 	testtifs/kafka/*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
+
 #A full TensorFlow implementation on a multipage document, start to finish
 kafka-t:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \k.out
 	python tensorPredictions.py fontData/kafka.data k.out >  \k2.out
-	$(OCR) -f fontData/kafka.data $(KAFKA) -B k2.out -t \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -P k2.out -t \
 	testtifs/kafka/*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
 #Just the Testing Data. Contingent upon completion of training in kafka-t stored in k2.out
 kafka-t-test:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -B k2.out -t \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -P k2.out -t \
 	testtifs/kafka/*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
@@ -725,7 +730,7 @@ quickkafka-t2:
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
 	python tensorPredictions.py fontData/kafka.data tmp.out > \tmp2.out
-	$(OCR) -f fontData/kafka.data $(KAFKA) -B tmp2.out -t \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -P tmp2.out -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
@@ -749,13 +754,14 @@ meow:
 	python t5.py fontData/kafka.data kafka1.out
 
 meow2:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -B tensorTmp/tensorOutput.txt -t \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorTmp/tensorOutput.txt -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
 
+#Three step process to running on any .data file and .tif file
 step1:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -P -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \x.out
 
@@ -763,6 +769,6 @@ step2:
 	python t5.py fontData/kafka.data x.out
 
 step3:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -B tensorOutput.txt -t \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorOutput.txt -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
