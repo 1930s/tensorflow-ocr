@@ -116,13 +116,13 @@ rowcount = 0
 for line in file_test:
   if(line!="\n"):
     colcount = 0
-    addystring = ""
+    addystring = " "
     for place in range(0, len(line)):
       if(line[place]=="," and colcount<27):
         testmatrix[rowcount][colcount]=line[(place-8):place]
         colcount+=1
       elif(colcount==27):
-        if(line[place]!="\n" and line[place]!=" "):
+#        if(line[place]!="\n" and line[place]!=" "):
           addystring+=line[place]
     rowcount+=1
     testlabels_arr.append(addystring)
@@ -180,10 +180,11 @@ with tf.Session() as sess:
   f = open("tensorResults.txt", "w"); 
 
    #Printing the first 100 characters in the document: actual vs expected
-  print("Prediction length:", len(predictions))
-  print("Test labels length:", len(testlabels_arr))
+  #print("Prediction length:", len(predictions))
+  #print("Test labels length:", len(testlabels_arr))
 
-  for i in range(0,len(predictions)-5):    
+  #Length of predictions greater than test labels, for some reason hmm
+  for i in range(0,len(testlabels_arr)):    
     #print("Actual: ", sorted_labels_arr[np.argmax(predictions[i])])
     #print("Expected: ",testlabels_arr[i])
     actual = sorted_labels_arr[np.argmax(predictions[i])]

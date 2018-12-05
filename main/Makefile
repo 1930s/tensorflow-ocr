@@ -694,7 +694,12 @@ kafka-b:
 kafka-t:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/*.tif | \
-		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \k.out
+	python tensorPredictions.py fontData/kafka.data k.out >  \k2.out
+	$(OCR) -f fontData/kafka.data $(KAFKA) -B k2.out -t \
+	testtifs/kafka/*.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
+
 
 quickkafka-b:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -t \

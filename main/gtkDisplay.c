@@ -218,6 +218,49 @@ static int collectText(glyph_t *glyphPtr, char *buffer, int lengthAvailable) {
 	return(filled);
 } // collectText
 
+// collect the OCR values of the text, but not using more than lengthAvailable.
+// Return how many characters were filled.
+static int collectTextTensor(glyph_t *glyphPtr, char *buffer, int lengthAvailable, FILE *tFile) {
+
+	int filled = 0;
+	if (!glyphPtr) return 0;
+	if (lengthAvailable < 5) return(0); // don't get too close to end
+
+
+	char *prediction = NULL;
+	size_t len=0;
+	ssize_t pread;
+	int length;
+	if((pread = getline(&prediction, &len, tFile)) != -1){
+		length = strlen(prediction);
+		if(prediction[length-1]=='\n')
+			prediction[length-1]='\0';
+	}
+
+	strncpy(buffer, prediction, lengthAvailable-1);
+	lengthAvailable -= strlen(buffer);
+	filled = strlen(buffer);
+
+	if (glyphPtr->next &&
+			glyphPtr->next->left - glyphPtr->right >
+			spaceFraction*glyphWidth) { // wide space in text
+		int spaces =
+			MAX(1, (glyphPtr->next->left - glyphPtr->right)/glyphWidth - 1);
+		while (spaces) {
+			strcat(buffer + filled, " ");
+			lengthAvailable -= 1;
+			filled += 1;
+			spaces -= 1;
+		}
+	} // wide space in text
+
+	filled += collectTextTensor(glyphPtr->next, buffer + filled, lengthAvailable, tFile);
+	lengthAvailable -= filled;
+
+
+	return(filled);
+} // collectText
+
 // these are all created together
 GtkTextBuffer *textBuffer;
 
@@ -252,6 +295,18 @@ void displayText(void *theButton, int *visual) { // from signal
 	char lineBuf[BUFSIZ];
 	lineHeaderList *curLine;
 	int prevBottom = 0;
+	FILE *tensorStream = NULL;
+
+	//Open TensorFlow predictions file, if neccessary
+
+	if(printTensorFlow){
+		tensorStream = fopen(tensorFile, "r");
+		if(tensorStream==NULL){
+                	perror("fopen");
+                	exit(EXIT_FAILURE);
+               	}
+	}
+
 	for (curLine = lineHeaders->next; curLine; curLine=curLine->next) {
 		int blankLines = 0;
 		textLine *curText = curLine->line;
@@ -263,7 +318,12 @@ void displayText(void *theButton, int *visual) { // from signal
 			// 	curText->top - prevBottom, curText->bottom - curText->top, blankLines);
 		}
 		prevBottom = curText->bottom;
-		int filled = collectText(curText->glyphs->next, lineBuf, BUFSIZ);
+		int filled;
+		if(!printTensorFlow){
+			filled = collectText(curText->glyphs->next, lineBuf, BUFSIZ);
+		} else {
+			filled = collectTextTensor(curText->glyphs->next, lineBuf, BUFSIZ, tensorStream);
+		}
 		if (0 && RTL != hasRTL(lineBuf)) { //  direction is wrong, do it again.
 			// fprintf(stderr, "switching in line to %s\n",
 			// 	RTL ? "LTR" : "RTL");
@@ -290,6 +350,7 @@ void displayText(void *theButton, int *visual) { // from signal
 			fprintf(stdout, "%s", spaces);
 			spaces[indent] = ' ';
 		}
+
 	//  bidi algorithm 
 		/* */
 		// fprintf(stderr, "before: %s\n", lineBuf);
@@ -341,6 +402,14 @@ void displayText(void *theButton, int *visual) { // from signal
 			//fprintf(stdout, "%s", "TESTEST");
 		}
 	} // each line
+
+
+	//Close TensorFlow predictions file if one was used
+	if(printTensorFlow){
+		fclose(tensorStream);
+                exit(EXIT_SUCCESS);
+	}
+
 	if ((int) (*visual)) {
 		gtk_widget_show_all(mainWindow);
 	} else {
@@ -415,6 +484,12 @@ void doExit() {
 	fprintf(stdout, "quit button pressed\n");
 	exit(0);
 } // doExit
+
+void tensorFlow() {
+	//Include things here
+	exit(0);
+} // tensorFlow
+
 
 int redo;
 
@@ -594,6 +669,11 @@ void GUI(int col) {
 			gtk_layout_put(infoLayout, writeTemplateButton, 500, 90);
 			g_signal_connect(GTK_OBJECT(writeTemplateButton), "clicked",
 				G_CALLBACK(writeTemplate), NULL);
+			GtkWidget *tensorFlowButton =
+				gtk_button_new_with_label("TensorFlow");
+			gtk_layout_put(infoLayout, tensorFlowButton, 500, 150);
+			g_signal_connect(GTK_OBJECT(tensorFlowButton), "clicked",
+				G_CALLBACK(tensorFlow), NULL);
 		} // buttons
 		// ocr-processed text: textView
 		if (firstDisplay) {

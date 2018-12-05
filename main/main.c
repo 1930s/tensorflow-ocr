@@ -121,7 +121,6 @@ tensorFile = NULL;
 int textOnly = false;
 setvbuf(stderr, NULL, _IONBF, 0); // stderr comes out immediately
 while (1) { // each option
-	fprintf(stdout, "MEOWWWW\n");
 
 	static struct option longOptions[] = {
 		{"font", required_argument, 0, 0},
@@ -208,10 +207,8 @@ while (1) { // each option
 		case 'T':
 			doTensorFlow = 1; break;
 		case 'B':
-			fprintf(stderr, "MEOWWWW\n");
 			printTensorFlow = 1; 
 			tensorFile = optarg;
-			fprintf(stderr, "MEOWWWW\n");
 			break;
 		case '?':
 			fprintf(stdout, "unrecognized option\n");
@@ -291,7 +288,6 @@ while (optind < argc) { // each TIFF file
 			// printf("displaying\n");
 			// here is -b flag
 			if(textOnly || printTensorFlow){
-				fprintf(stderr, "MEOWWWW2\n");
 				displayText(NULL, &visual);
 			} else {
 				redo = 0; // unless we learn otherwise.
