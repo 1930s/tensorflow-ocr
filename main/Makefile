@@ -761,7 +761,7 @@ meow2:
 
 #Three step process to running on any .data file and .tif file
 step1:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -P -t \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \x.out
 

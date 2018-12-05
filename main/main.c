@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <getopt.h>
 #include "ocr.h"
 
+jmp_buf meow;
 
 // variables
 int minGlyphWidth = MINGLYPHWIDTH;
@@ -45,7 +46,6 @@ int alwaysCombine = false;
 int minGlyphArea = 1;
 int doTensorFlow = 0;
 int printTensorFlow = 0;
-int guiTensorFlow = 0;
 
 static void usage() {
 fprintf(stderr,
@@ -77,7 +77,7 @@ fprintf(stderr,
 	"\t-i ignore glyph's vertical placement in matching glyphs\n"
 	"\t-d n minimum glyph area\n"
 	"\t-T enables TensorFlow\n"
-	"\t-B enables printing TensorFlow with output in batch mode\n",
+	"\t-P enables printing TensorFlow with output in batch mode\n",
 		MINGLYPHHEIGHT, MINGLYPHWIDTH, MAXGLYPHHEIGHT, MAXGLYPHWIDTH, MINMATCH,
 		GOODMATCH, SPLITTABLE, SPACEFRACTION, CUTOFF, SLANT
 	);
@@ -210,7 +210,7 @@ while (1) { // each option
 		case 'T':
 			doTensorFlow = 1; break;
 		case 'P':
-			printTensorFlow = 1; 
+			printTensorFlow = 1;
 			tensorFile = optarg;
 			break;
 		case '?':
@@ -218,7 +218,7 @@ while (1) { // each option
 			usage();
 			break;
 
-	
+
 	} // switch
 } // each option
 if (fontFile == NULL) {
