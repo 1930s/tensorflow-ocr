@@ -746,20 +746,23 @@ quickkafka-test:
 
 #Tester helper functions
 meow:
+	python t5.py fontData/kafka.data kafka1.out
+
+meow2:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -B tensorTmp/tensorOutput.txt -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
-meow2:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -B tmp2.out -t \
-	testtifs/kafka/*.tif | \
+
+step1:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
+	testtifs/kafka/xaaa.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \x.out
+
+step2:
+	python t5.py fontData/kafka.data x.out
+
+step3:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -B tensorOutput.txt -t \
+	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
-
-meow3:
-	python tensorPredictions.py fontData/kafka.data kafka1.out
-
-meow4:
-	python t.py fontData/kafka.data kafka1.out
-
-meow5:
-	python t5.py fontData/kafka.data kafka1.out

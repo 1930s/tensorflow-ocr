@@ -170,6 +170,31 @@ gboolean acceptValue(GtkEntry *newValueWidget, gpointer data) {
 	return(0);
 } // acceptValue
 
+FILE *tensorStream = NULL;
+
+static void initTensorFile(){
+        tensorStream = fopen(tensorFile, "r");
+        if(tensorStream==NULL){
+		perror("fopen");
+		exit(EXIT_FAILURE);
+        }
+}
+
+//This would be nice to have
+//HARDCODE FILE
+static char* getTensorOcr(){
+	char* prediction = NULL;
+	size_t len=0;
+	ssize_t pread;
+	int length;
+	if((pread = getline(&prediction, &len, tensorStream)) != -1){
+		length = strlen(prediction);
+		if(prediction[length-1]=='\n')
+			prediction[length-1]='\0';
+	}
+	return prediction;
+}
+
 // simple textual output
 void showText() { // called from a button; ignore any parameters
 	fprintf(stdout, "\ntext\n");
@@ -184,6 +209,30 @@ void showText() { // called from a button; ignore any parameters
 			if (glyphPtr->left - prevRight > glyphWidth / 2) {
 				bufPtr += sprintf(bufPtr, " ");
 			}
+			//RIGHT HERE
+			bufPtr += sprintf(bufPtr, "%s", ocrValue(glyphPtr->tuple));
+			//fprintf(stdout, "%d", glyphPtr->tuple);
+			prevRight = glyphPtr->right;
+		} // one glyph
+		fprintf(stdout, "%s\n", buf);
+	} // one line
+} // showText
+
+// simple textual output
+void showTensorFlow() { // called from a button; ignore any parameters
+	fprintf(stdout, "\ntensor text\n");
+	lineHeaderList *curLine;
+	for (curLine = lineHeaders->next; curLine; curLine=curLine->next) {
+		glyph_t *glyphPtr;
+		char buf[BUFSIZ];
+		char *bufPtr = buf;
+		int prevRight = 0; // where the previous character ended
+		for (glyphPtr = curLine->line->glyphs->next; glyphPtr;
+				glyphPtr = glyphPtr->next) {
+			if (glyphPtr->left - prevRight > glyphWidth / 2) {
+				bufPtr += sprintf(bufPtr, " ");
+			}
+			//RIGHT HERE
 			bufPtr += sprintf(bufPtr, "%s", ocrValue(glyphPtr->tuple));
 			//fprintf(stdout, "%d", glyphPtr->tuple);
 			prevRight = glyphPtr->right;
@@ -198,7 +247,10 @@ static int collectText(glyph_t *glyphPtr, char *buffer, int lengthAvailable) {
 	int filled = 0;
 	if (!glyphPtr) return 0;
 	if (lengthAvailable < 5) return(0); // don't get too close to end
-	strncpy(buffer, ocrValue(glyphPtr->tuple), lengthAvailable-1);
+	if(!printTensorFlow)
+		strncpy(buffer, ocrValue(glyphPtr->tuple), lengthAvailable-1);
+	else
+		strncpy(buffer, getTensorOcr(), lengthAvailable-1);
 	lengthAvailable -= strlen(buffer);
 	filled = strlen(buffer);
 	if (glyphPtr->next &&
@@ -220,24 +272,27 @@ static int collectText(glyph_t *glyphPtr, char *buffer, int lengthAvailable) {
 
 // collect the OCR values of the text, but not using more than lengthAvailable.
 // Return how many characters were filled.
-static int collectTextTensor(glyph_t *glyphPtr, char *buffer, int lengthAvailable, FILE *tFile) {
 
+/*
+//static int collectTextTensor(glyph_t *glyphPtr, char *buffer, int lengthAvailable, FILE *tFile) {
+static int collectTextTensor(glyph_t *glyphPtr, char *buffer, int lengthAvailable) {
 	int filled = 0;
 	if (!glyphPtr) return 0;
 	if (lengthAvailable < 5) return(0); // don't get too close to end
 
+	//Reading line by line from the TensorFlow input document
+	//char *prediction = NULL;
+	//size_t len=0;
+	//ssize_t pread;
+	//int length;
+	//if((pread = getline(&prediction, &len, tFile)) != -1){
+	//	length = strlen(prediction);
+	//	if(prediction[length-1]=='\n')
+	//		prediction[length-1]='\0';
+	//}
+	char *tensorOcrVal = getTensorOCR(tFile);
 
-	char *prediction = NULL;
-	size_t len=0;
-	ssize_t pread;
-	int length;
-	if((pread = getline(&prediction, &len, tFile)) != -1){
-		length = strlen(prediction);
-		if(prediction[length-1]=='\n')
-			prediction[length-1]='\0';
-	}
-
-	strncpy(buffer, prediction, lengthAvailable-1);
+	strncpy(buffer, tensorOcrVal, lengthAvailable-1);
 	lengthAvailable -= strlen(buffer);
 	filled = strlen(buffer);
 
@@ -254,12 +309,14 @@ static int collectTextTensor(glyph_t *glyphPtr, char *buffer, int lengthAvailabl
 		}
 	} // wide space in text
 
-	filled += collectTextTensor(glyphPtr->next, buffer + filled, lengthAvailable, tFile);
+	//filled += collectTextTensor(glyphPtr->next, buffer + filled, lengthAvailable, tFile);
+	filled += collectTextTensor(glyphPtr->next, buffer + filled, lengthAvailable);
 	lengthAvailable -= filled;
 
 
 	return(filled);
 } // collectText
+*/
 
 // these are all created together
 GtkTextBuffer *textBuffer;
@@ -295,17 +352,19 @@ void displayText(void *theButton, int *visual) { // from signal
 	char lineBuf[BUFSIZ];
 	lineHeaderList *curLine;
 	int prevBottom = 0;
-	FILE *tensorStream = NULL;
 
+	//FILE *tensorStream = NULL;
 	//Open TensorFlow predictions file, if neccessary
-
 	if(printTensorFlow){
-		tensorStream = fopen(tensorFile, "r");
-		if(tensorStream==NULL){
-                	perror("fopen");
-                	exit(EXIT_FAILURE);
-               	}
+		initTensorFile();
 	}
+	//if(printTensorFlow){
+	//	tensorStream = fopen(tensorFile, "r");
+	//	if(tensorStream==NULL){
+        //        	perror("fopen");
+        //        	exit(EXIT_FAILURE);
+        //       }
+	//}
 
 	for (curLine = lineHeaders->next; curLine; curLine=curLine->next) {
 		int blankLines = 0;
@@ -318,12 +377,15 @@ void displayText(void *theButton, int *visual) { // from signal
 			// 	curText->top - prevBottom, curText->bottom - curText->top, blankLines);
 		}
 		prevBottom = curText->bottom;
-		int filled;
-		if(!printTensorFlow){
-			filled = collectText(curText->glyphs->next, lineBuf, BUFSIZ);
-		} else {
-			filled = collectTextTensor(curText->glyphs->next, lineBuf, BUFSIZ, tensorStream);
-		}
+
+		//int filled;
+		//if(!printTensorFlow){
+		int filled = collectText(curText->glyphs->next, lineBuf, BUFSIZ);
+		//} else {
+		//	filled = collectTextTensor(curText->glyphs->next, lineBuf, BUFSIZ, tensorStream);
+		//
+		//}
+
 		if (0 && RTL != hasRTL(lineBuf)) { //  direction is wrong, do it again.
 			// fprintf(stderr, "switching in line to %s\n",
 			// 	RTL ? "LTR" : "RTL");
@@ -673,7 +735,7 @@ void GUI(int col) {
 				gtk_button_new_with_label("TensorFlow");
 			gtk_layout_put(infoLayout, tensorFlowButton, 500, 150);
 			g_signal_connect(GTK_OBJECT(tensorFlowButton), "clicked",
-				G_CALLBACK(tensorFlow), NULL);
+				G_CALLBACK(showTensorFlow), NULL);
 		} // buttons
 		// ocr-processed text: textView
 		if (firstDisplay) {
