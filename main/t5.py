@@ -171,12 +171,24 @@ with tf.Session() as sess:
   correct = 0
 
   #Length of predictions greater than test labels, for some reason hmm
+  #label tally array, used to tally corrent times of label
+  label_tally = [0]*len(sorted_labels_arr)
+  
+  print(label_tally)
+
   for i in range(0,len(testlabels_arr)):    
     actual = sorted_labels_arr[np.argmax(predictions[i])]
     expected = testlabels_arr[i]
     if(expected=='XX'):
       adjusted_total-=1
     elif(actual==expected):
+      #tally correct label +1
+      #match label
+      for j in range(0, len(sorted_labels_arr)):
+        if(sorted_labels_arr[j] == expected):
+          label_tally[j] += 1
+
+      #tally correct +1
       correct+=1
     print(actual, "   ", expected)
 
@@ -188,7 +200,16 @@ with tf.Session() as sess:
   print("Correct: ", correct)
   print("Adjusted Total: ", adjusted_total)
   print("Total", total)
-
+  print()
+ 
+  total = 0
+  #show label tally list
+  print("List of correctly determined labels:")
+  for i in range(0, len(sorted_labels_arr)):
+    print(sorted_labels_arr[i], ": ", label_tally[i])
+    total += label_tally[i]
+  print("\nTotal Correct: ", total)
+    
 #  all_trials_total_total = adjusted_total*5
 #  all_trials_total_correct += correct
 #  f.write(100.0*all_trials_total_correct/all_trials_total_total, "% accuracy over 5 trials")
