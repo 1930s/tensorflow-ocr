@@ -780,3 +780,7 @@ step3:
 step3-i:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -I tensorTmp/tensorOutput.txt \
 	testtifs/kafka/xaaa.tif
+
+
+step2b:
+	python t5.py fontData/bashevis.data bashevis.out

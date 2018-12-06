@@ -28,15 +28,19 @@ for line in file:
   lineCounter += 1 #we are on the next line for reading
 
 remove_dups_labels_arr = set(labels_arr)
-sorted_labels_arr = sorted(remove_dups_labels_arr)
+sorted_labels_arr = sorted(remove_dups_labels_arr)	#removing this may increase speed
+total_label_tally = sorted_labels_arr
 
 numeric_labels_arr = []  #label input into tensyflow
+
+#total_label_tally = [0]*len(sorted_labels_arr)	#can be used to check for accuracy based on #instance of char in datafile
 
 for value in labels_arr:
     for label in sorted_labels_arr:
         if value == label:
             index = sorted_labels_arr.index(label)
             numeric_labels_arr.append(index)
+            #total_label_tally[index]+=1
 
 flowy_labels = np.array(numeric_labels_arr)
 
@@ -173,24 +177,38 @@ with tf.Session() as sess:
   #Length of predictions greater than test labels, for some reason hmm
   #label tally array, used to tally corrent times of label
   label_tally = [0]*len(sorted_labels_arr)
-  
-  print(label_tally)
+  total_label_tally = [0]*len(sorted_labels_arr)
+
+  #print(label_tally)
+
+  error_char_array = []
 
   for i in range(0,len(testlabels_arr)):    
     actual = sorted_labels_arr[np.argmax(predictions[i])]
     expected = testlabels_arr[i]
-    if(expected=='XX'):
+    if(expected=='XX' or expected==''):
       adjusted_total-=1
     elif(actual==expected):
+      correct+=1
+      index = sorted_labels_arr.index(expected)
+      label_tally[index] += 1
+      total_label_tally[index] += 1
+    else:
+      if expected in sorted_labels_arr:
+      	index = sorted_labels_arr.index(expected)
+      	total_label_tally[index]+=1
+      else:
+        error_char_array.append(expected)
       #tally correct label +1
       #match label
-      for j in range(0, len(sorted_labels_arr)):
-        if(sorted_labels_arr[j] == expected):
-          label_tally[j] += 1
+#      for j in range(0, len(sorted_labels_arr)):
+#        if(sorted_labels_arr[j] == expected):
+#          label_tally[j] += 1
 
       #tally correct +1
-      correct+=1
-    print(actual, "   ", expected)
+#    print(actual, "   ", expected)
+
+
 
   print("Batch", "Tensor")
   print()
@@ -204,12 +222,18 @@ with tf.Session() as sess:
  
   total = 0
   #show label tally list
-  print("List of correctly determined labels:")
+  #print("List of correctly determined labels:")
   for i in range(0, len(sorted_labels_arr)):
-    print(sorted_labels_arr[i], ": ", label_tally[i])
-    total += label_tally[i]
-  print("\nTotal Correct: ", total)
-    
+    print(sorted_labels_arr[i], ":	", label_tally[i], "/", total_label_tally[i])
+
+  print("Length of sorted labels array: ", len(sorted_labels_arr))
+
+  print("Correct labels: ", sum(label_tally))
+  print("Total labels: ", sum(total_label_tally))
+  print("Error chars: ", error_char_array)
+  #  total += label_tally[i]
+  #print("\nTotal Correct: ", total)
+
 #  all_trials_total_total = adjusted_total*5
 #  all_trials_total_correct += correct
 #  f.write(100.0*all_trials_total_correct/all_trials_total_total, "% accuracy over 5 trials")
