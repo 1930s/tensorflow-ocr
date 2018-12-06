@@ -22,8 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <getopt.h>
 #include "ocr.h"
 
-jmp_buf meow;
-
 // variables
 int minGlyphWidth = MINGLYPHWIDTH;
 int minGlyphHeight = MINGLYPHHEIGHT;
@@ -46,6 +44,7 @@ int alwaysCombine = false;
 int minGlyphArea = 1;
 int doTensorFlow = 0;
 int printTensorFlow = 0;
+int tensorDisplay = 0;	//use GUI on TensorFlow
 
 static void usage() {
 fprintf(stderr,
@@ -95,6 +94,7 @@ fprintf(stdout, "type of %d is 0%x\n", 0x0028,
 	fribidi_get_type_internal(0x0028));
 return;
 // readTree(); // get training data
+
 bucket_t *bucket;
 int index;
 
@@ -140,7 +140,7 @@ while (1) { // each option
 		{0, 0, 0, 0}
 	};
 	int optionIndex;
-	int c = getopt_long(argc, argv, "f:TP:th:w:s:m:H:W:g:p:c:iSL:xC:XAd:",
+	int c = getopt_long(argc, argv, "f:TP:I:th:w:s:m:H:W:g:p:c:iSL:xC:XAd:",
 		longOptions, &optionIndex);
 	if (c == -1) break; // no more options
 	switch (c) {
@@ -213,6 +213,11 @@ while (1) { // each option
 			printTensorFlow = 1;
 			tensorFile = optarg;
 			break;
+		case 'I':
+			printTensorFlow = 1;
+			tensorDisplay = 1;
+			tensorFile = optarg;
+			break;
 		case '?':
 			fprintf(stdout, "unrecognized option\n");
 			usage();
@@ -234,6 +239,7 @@ while (optind < argc) { // each TIFF file
 		if(!doTensorFlow)
 			fprintf(stdout, "%s\n", fileBase);
 
+		//fprintf(stderr, "MEOWWWWW");
 
 		fprintf(stderr, "%s\n", fileBase);
 		readPicture();

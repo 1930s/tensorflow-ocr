@@ -155,10 +155,10 @@ with tf.Session() as sess:
   #And this is the function that predicts the new test data
   predictions = model.predict(testmatrix)
 
-  f = open("tensorOutput.txt", "w"); 
+  f = open("tensorTmp/tensorOutput.txt", "w"); 
 
   #Printing the first 100 characters in the document: actual vs expected
-  for i in range(0,len(predictions)-1):    
+  for i in range(0,len(predictions)):    
     f.write(sorted_labels_arr[np.argmax(predictions[i])])
     f.write("\n")
 

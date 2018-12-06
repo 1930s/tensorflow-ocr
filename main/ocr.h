@@ -243,4 +243,5 @@ typedef struct p_kd_node_s {
 	extern int minGlyphArea; // default INFTY
 	extern int doTensorFlow; // enables TensorFlow
 	extern int printTensorFlow;  //print TensorFlow in batch mode
-	extern const char *tensorFile;
+	extern int tensorDisplay;  //print TensorFlow in GUI
+	extern const char *tensorFile;  //predicted TensorFlow ocr values

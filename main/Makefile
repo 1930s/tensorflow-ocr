@@ -687,8 +687,12 @@ kafka-i:
 	testtifs/kafka/*.tif
 
 kafka-i2:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -I tensorOutput.txt \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorOutput.txt \
 	testtifs/kafka/*.tif
+
+quickkafka-i:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -I tensorTmp/tensorOutput.txt \
+	testtifs/kafka/xaaa.tif
 
 kafka-b:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -t \
@@ -769,6 +773,10 @@ step2:
 	python t5.py fontData/kafka.data x.out
 
 step3:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorOutput.txt -t \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorTmp/tensorOutput.txt -t \
 	testtifs/kafka/xaaa.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
+
+step3-i:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -I tensorTmp/tensorOutput.txt \
+	testtifs/kafka/xaaa.tif
