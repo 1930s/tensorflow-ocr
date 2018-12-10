@@ -149,6 +149,7 @@ typedef struct p_kd_node_s {
 	extern const char *fontFile;
 	void setFileBase(const char *base);
 	int anotherPage();
+	extern const char *tensorFile;  //predicted TensorFlow ocr values
 
 // provided by segment.c
 	extern int header; // number of blank pixels at top of page
@@ -241,7 +242,6 @@ typedef struct p_kd_node_s {
 	extern int mayCombine;
 	extern int alwaysCombine; // for training purposes
 	extern int minGlyphArea; // default INFTY
-	extern int doTensorFlow; // enables TensorFlow
+	extern int doTensorFlow; // enables TensorFlow predictions
 	extern int printTensorFlow;  //print TensorFlow in batch mode
 	extern int tensorDisplay;  //print TensorFlow in GUI
-	extern const char *tensorFile;  //predicted TensorFlow ocr values

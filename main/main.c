@@ -239,7 +239,8 @@ while (optind < argc) { // each TIFF file
 		if(!doTensorFlow)
 			fprintf(stdout, "%s\n", fileBase);
 
-		//fprintf(stderr, "MEOWWWWW");
+		//if(doTensorFlow)
+		//	fprintf(stdout, "newpage\n");
 
 		fprintf(stderr, "%s\n", fileBase);
 		readPicture();

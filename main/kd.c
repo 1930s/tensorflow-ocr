@@ -27,6 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 kd_node_t *categorization; // the root
 int RTL;
+FILE *tensorStream = NULL;
 
 static float distSquared(tuple_t tuple1, tuple_t tuple2) {
 	int dimension;
@@ -178,6 +179,34 @@ float ocrDistance2(tuple_t tuple) { // returns square of distance
 	return (distSquared(tuple, bucket->key[index]));
 } // ocrDistance
 
+static void initTensorFile(){
+        //fprintf(stderr, "MEOWWWWW initTensorFile\n");
+	//fprintf(stderr, "MEOWWWWW3\n");
+        tensorStream = fopen(tensorFile, "r");
+        if(tensorStream==NULL){
+                perror("fopen");
+                exit(EXIT_FAILURE);
+        }
+}
+
+//Find next character from TensorFlow predicted ocr output file, one new value on each line
+static char* getTensorOcr(){
+        char* prediction = NULL;
+        size_t len=0;
+        ssize_t pread;
+        int length;
+        if((pread = getline(&prediction, &len, tensorStream)) != -1){
+                length = strlen(prediction);
+                if(prediction[length-1]=='\n')
+                        prediction[length-1]='\0';
+        }
+        //fprintf(stderr, "MEOWWWWW getTensorOcr\n");
+        //fprintf(stderr, "Prediction: %s", prediction);
+        return prediction;
+}
+
+
+
 const char *ocrValue(tuple_t tuple) {
 
         bucket_t *bucket;
@@ -186,21 +215,23 @@ const char *ocrValue(tuple_t tuple) {
 	if(!printTensorFlow)
         	closestMatch(categorization, tuple, &bucket, &index, BIGDIST); //where nearest neighbor makes the prediction
 
+	//fprintf(stderr, "MEOWWWWW4\n");
+	if(printTensorFlow && tensorStream==NULL)
+		initTensorFile();
+
+	if(printTensorFlow)
+		return getTensorOcr();
+
         if(doTensorFlow)
         {
-                //Original working code for t.py
+                //Print each tuple to stdout together with the char predicted by Batch Mode
                 for(int i=0; i<27; i++)
                         fprintf(stdout, "%f, %s", tuple[i], " ");
                 if (distSquared(tuple, bucket->key[index]) <= minMatch*minMatch)
                         fprintf(stdout, "%s", bucket->values[index], " ");
                 else
-                        fprintf(stdout, "%s", "XX", " ");
+                        fprintf(stdout, "%s", "XX", " ");	//unknown batch char marked as XX
                 fprintf(stdout, "%s", "\n");
-
-                //for(int i=0; i<27; i++)
-                //      fprintf(stdout, "%f, %s", tuple[i], " ");
-                //      //tuple_arr[i] = tuple[i];
-                //fprintf(stdout, "%s", "\n");
         }
 
 

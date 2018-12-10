@@ -170,33 +170,6 @@ gboolean acceptValue(GtkEntry *newValueWidget, gpointer data) {
 	return(0);
 } // acceptValue
 
-//Initialize the TensorFlow predicted ocr output file, if neccessary
-FILE *tensorStream = NULL;
-static void initTensorFile(){
-	//fprintf(stderr, "MEOWWWWW initTensorFile\n");
-        tensorStream = fopen(tensorFile, "r");
-        if(tensorStream==NULL){
-		perror("fopen");
-		exit(EXIT_FAILURE);
-        }
-}
-
-//Find next character from TensorFlow predicted ocr output file, one new value on each line
-static char* getTensorOcr(){
-	char* prediction = NULL;
-	size_t len=0;
-	ssize_t pread;
-	int length;
-	if((pread = getline(&prediction, &len, tensorStream)) != -1){
-		length = strlen(prediction);
-		if(prediction[length-1]=='\n')
-			prediction[length-1]='\0';
-	}
-	//fprintf(stderr, "MEOWWWWW getTensorOcr\n");
-	//fprintf(stderr, "Prediction: %s", prediction);
-	return prediction;
-}
-
 // simple textual output
 void showText() { // called from a button; ignore any parameters
 	fprintf(stdout, "\ntext\n");
@@ -212,12 +185,7 @@ void showText() { // called from a button; ignore any parameters
 			if (glyphPtr->left - prevRight > glyphWidth / 2) {
 				bufPtr += sprintf(bufPtr, " ");
 			}
-			//RIGHT HERE
-			if(tensorDisplay==0){
-				bufPtr += sprintf(bufPtr, "%s", ocrValue(glyphPtr->tuple));
-			} else {
-				bufPtr += sprintf(bufPtr, "%s", getTensorOcr());
-			}
+			bufPtr += sprintf(bufPtr, "%s", ocrValue(glyphPtr->tuple));
 			//fprintf(stdout, "%d", glyphPtr->tuple);
 			prevRight = glyphPtr->right;
 		} // one glyph
@@ -226,9 +194,7 @@ void showText() { // called from a button; ignore any parameters
 } // showText
 
 void showTensorFlow() { // called from a button; ignore any parameters
-	//initTensorFile();
-	//tensorDisplay=1;
-	//call new .c file
+	//TBD
 } // show Text in Tensor Flow Mode
 
 // collect the OCR values of the text, but not using more than lengthAvailable.
@@ -237,13 +203,7 @@ static int collectText(glyph_t *glyphPtr, char *buffer, int lengthAvailable) {
 	int filled = 0;
 	if (!glyphPtr) return 0;
 	if (lengthAvailable < 5) return(0); // don't get too close to end
-	//fprintf(stderr, "MEOW collectText\n");
-	if(tensorDisplay)
-		strncpy(buffer, getTensorOcr(), lengthAvailable-1);
-	else if(!printTensorFlow)
-		strncpy(buffer, ocrValue(glyphPtr->tuple), lengthAvailable-1);
-	else	//if !tensorDisplay && printTensorFlow
-		strncpy(buffer, getTensorOcr(), lengthAvailable-1);
+	strncpy(buffer, ocrValue(glyphPtr->tuple), lengthAvailable-1);
 	lengthAvailable -= strlen(buffer);
 	filled = strlen(buffer);
 	if (glyphPtr->next &&
@@ -302,12 +262,6 @@ void displayText(void *theButton, int *visual) { // from signal
 	lineHeaderList *curLine;
 	int prevBottom = 0;
 
-	if(printTensorFlow){
-		initTensorFile();
-	}
-
-	//fprintf(stderr, "MEOWWWW displayText");
-
 	for (curLine = lineHeaders->next; curLine; curLine=curLine->next) {
 		int blankLines = 0;
 		textLine *curText = curLine->line;
@@ -320,8 +274,6 @@ void displayText(void *theButton, int *visual) { // from signal
 		}
 		prevBottom = curText->bottom;
 		int filled = collectText(curText->glyphs->next, lineBuf, BUFSIZ);
-
-		//fprintf(stderr, "MEOWWWWW1\n");
 
 
 		if (0 && RTL != hasRTL(lineBuf)) { //  direction is wrong, do it again.
@@ -350,8 +302,6 @@ void displayText(void *theButton, int *visual) { // from signal
 			fprintf(stdout, "%s", spaces);
 			spaces[indent] = ' ';
 		}
-
-		//fprintf(stderr, "MEOWWWWW2\n");
 
 	//  bidi algorithm 
 		/* */
@@ -388,8 +338,6 @@ void displayText(void *theButton, int *visual) { // from signal
 	//  output data itself
 		// fprintf(stderr, "%d blank lines\n", blankLines);
 
-		//fprintf(stderr, "MEOWWWWW3\n");
-
 		if ((int) (*visual)) {
 			for (; blankLines; blankLines -= 1) {
 				gtk_text_buffer_insert_at_cursor(textBuffer, "\n", 1);
@@ -399,25 +347,13 @@ void displayText(void *theButton, int *visual) { // from signal
 			// redisplay happens.
 		} else {
 			for (; blankLines; blankLines -= 1) {
-				fprintf(stdout, "\n");
+				if(!doTensorFlow)
+					fprintf(stdout, "\n");
 			}
-			//RIGHT HERE
 			if(!doTensorFlow)
 				fprintf(stdout, "%s", lineBuf);
-			//fprintf(stdout, "%s", "TESTEST");
 		}
 	} // each line
-
-	//fprintf(stderr, "MEOWWWWW5\n");
-
-
-	//Close TensorFlow predictions file if one was used
-	if(printTensorFlow || tensorDisplay){
-		fclose(tensorStream);
-                //exit(EXIT_SUCCESS);
-	}
-
-	//fprintf(stderr, "MEOWWWWW6\n");
 
 	if ((int) (*visual)) {
 		gtk_widget_show_all(mainWindow);

@@ -766,15 +766,28 @@ meow2:
 #Three step process to running on any .data file and .tif file
 step1:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
-	testtifs/kafka/xaaa.tif | \
+	testtifs/kafka/xaa*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \x.out
 
 step2:
-	python t5.py fontData/kafka.data x.out
+	python t5vc2.py fontData/kafka.data x.out
 
 step3:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorTmp/tensorOutput.txt -t \
-	testtifs/kafka/xaaa.tif | \
+	testtifs/kafka/xaa*.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
+
+s1:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
+	testtifs/kafka/xaaz.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \x.out
+
+s2:
+	python t5vc2.py fontData/kafka.data x.out
+
+s3:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorTmp/tensorOutput.txt -t \
+	testtifs/kafka/xaaz.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
 step3-i:
@@ -784,3 +797,26 @@ step3-i:
 
 step2b:
 	python t5.py fontData/bashevis.data bashevis.out
+
+testa:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
+	testtifs/kafka/meow1.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \xa2.out
+
+testb:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
+	testtifs/kafka/meow2.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \xb.out
+
+testab:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
+	testtifs/kafka/meow*.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \xab.out
+
+t2:
+	python t5.py fontData/kafka.data xab.out
+
+t3:
+	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorTmp/tensorOutput.txt -t \
+	testtifs/kafka/meow*.tif | \
+		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
