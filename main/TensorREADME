@@ -1,0 +1,24 @@
+#Three step process to running on any .data  and .tif file
+
+#Step 1: T flag is used to prepare the training and test data for t5.py
+step1:
+        $(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
+        testtifs/kafka/xaa*.tif | \
+                ../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \tmp.out
+
+#Step 2: outputs accuracy data to stdout and list of predictions to tensorOutput.txt
+step2:
+        python t5.py fontData/kafka.data tmp.out
+
+#Step 3: P flag used for printing to Batch mode
+step3:
+        $(OCR) -f fontData/kafka.data $(KAFKA) -P tensorOutput.txt -t \
+        testtifs/kafka/xaa*.tif | \
+                ../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
+
+#Step 3: I flag used for printing to Interactive mode
+step3-i:
+        $(OCR) -f fontData/kafka.data $(KAFKA) -I tensorOutput.txt \
+        testtifs/kafka/xaa*.tif
+
+

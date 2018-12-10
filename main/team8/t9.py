@@ -18,6 +18,7 @@ file = open(fname, "r")
 labels_arr = []
 lineCounter = 0
 
+
 for line in file:
   start = 0 #reset start of line range
   for symbol in range(0, len(line)-1):
@@ -27,7 +28,7 @@ for line in file:
   lineCounter += 1 #we are on the next line for reading
 
 remove_dups_labels_arr = set(labels_arr)
-sorted_labels_arr = sorted(remove_dups_labels_arr)	#removing this may increase performance
+sorted_labels_arr = sorted(remove_dups_labels_arr)	#removing this may increase speed
 total_label_tally = sorted_labels_arr
 
 numeric_labels_arr = []  #label input into tensyflow
@@ -82,34 +83,6 @@ for line in file:
 #print("Shape: ")
 #print(floaty_floats.shape)
 
-###############################################
-# Creating the Test Data matrices
-# testmatrix: the list of test glyphs
-# testlabels_arr: the list of correct characters that are supposed to be associated with those glyphs
-
-filename_test = sys.argv[2]
-file_test = open(filename_test, "r")
-
-linecount = len(open(filename_test).readlines( ))
-
-testmatrix = np.zeros(shape=(linecount, 27))
-testlabels_arr = []
-
-#Fun parsy times inside this loop
-rowcount = 0
-for line in file_test:
-  if(line!="\n"):
-    colcount = 0
-    addystring = ""
-    for place in range(0, len(line)):
-      if(line[place]=="," and colcount<27):
-        testmatrix[rowcount][colcount]=line[(place-8):place]
-        colcount+=1
-      elif(colcount==27):
-        if(line[place]!="\n" and line[place]!=" "):
-          addystring+=line[place]
-    rowcount+=1
-    testlabels_arr.append(addystring)
 
 #print("Rowcount: ", rowcount);
 #print("Test Matrix gets tested here")
@@ -155,15 +128,55 @@ with tf.Session() as sess:
   test_loss, test_acc = model.evaluate(np.array(tupleArray), flowy_labels)
   print('Test accuracy:', test_acc)
 
+
+  ###############################################
+  # Creating the Test Data matrices
+  # testmatrix: the list of test glyphs
+  # testlabels_arr: the list of correct characters that are supposed to be associated with those glyphs
+
+  filename_test = sys.argv[2]
+  file_test = open(filename_test, "r")
+  linecount = len(open(filename_test).readlines( ))
+  testmatrix = np.zeros(shape=(linecount, 27))
+  testlabels_arr = []
+  newpagearr = []
+
+  #Fun parsy times inside this loop
+  rowcount = 0
+  num=0
+  for line in file_test:
+    num+=1
+    if(line=="newpage\n"):
+      num=num-1
+      newpagearr.append(num)
+    elif(line!="\n" and line!="newpage\n"):
+      colcount = 0
+      addystring = ""
+      for place in range(0, len(line)):
+        if(line[place]=="," and colcount<27):
+          testmatrix[rowcount][colcount]=line[(place-8):place]
+          colcount+=1
+        elif(colcount==27):
+          if(line[place]!="\n" and line[place]!=" "):
+            addystring+=line[place]
+      rowcount+=1
+      testlabels_arr.append(addystring)
+
+  newpagearr.append(linecount)
+
   #And this is the function that predicts the new test data
+  #predictions = model.predict(testmatrix)
+
+  #f = open("tensorTmp/tensorOutput.txt", "w"); 
+  print("Here come the pages:",newpagearr)
   predictions = model.predict(testmatrix)
 
-  f = open("tensorOutput.txt", "w"); 
-
-  #Printing the first 100 characters in the document: actual vs expected
-  for i in range(0,len(predictions)):    
-    f.write(sorted_labels_arr[np.argmax(predictions[i])])
-    f.write("\n")
+  for page in range(0, len(newpagearr)-1):
+    fname = "tensorTmp/output" + str(page+1) + ".txt"
+    f = open(fname, "w")
+    for i in range(newpagearr[page],newpagearr[page+1]):
+      f.write(sorted_labels_arr[np.argmax(predictions[i])])
+      f.write("\n")
 
    #Printing the first 100 characters in the document: actual vs expected
   #print("Prediction length:", len(predictions))
@@ -182,7 +195,7 @@ with tf.Session() as sess:
 
   error_char_array = []
 
-  for i in range(0,len(testlabels_arr)):    
+  for i in range(0,len(testlabels_arr)-1):    
     actual = sorted_labels_arr[np.argmax(predictions[i])]
     expected = testlabels_arr[i]
     if(expected=='XX' or expected==''):
@@ -212,6 +225,13 @@ with tf.Session() as sess:
   print("Batch", "Tensor")
   print()
 
+  percentCorrect = 100.0*correct/adjusted_total
+  print("Tensor percentage correct: ", percentCorrect)
+  print("Correct: ", correct)
+  print("Adjusted Total: ", adjusted_total)
+  print("Total", total)
+  print()
+ 
   total = 0
   #show label tally list
   #print("List of correctly determined labels:")
@@ -223,14 +243,6 @@ with tf.Session() as sess:
   print("Correct labels: ", sum(label_tally))
   print("Total labels: ", sum(total_label_tally))
   print("Error chars: ", error_char_array)
-
-  percentCorrect = 100.0*correct/adjusted_total
-  print("Tensor percentage correct: ", percentCorrect)
-  print("Correct: ", correct)
-  print("Adjusted Total: ", adjusted_total)
-  print("Total", total)
-  print()
-
   #  total += label_tally[i]
   #print("\nTotal Correct: ", total)
 

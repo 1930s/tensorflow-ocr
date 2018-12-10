@@ -755,7 +755,7 @@ quickkafka-test:
 
 #Tester helper functions
 meow:
-	python t5.py fontData/kafka.data kafka1.out
+	python t.py fontData/kafka.data kafka1.out
 
 meow2:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorTmp/tensorOutput.txt -t \
@@ -770,7 +770,7 @@ step1:
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \x.out
 
 step2:
-	python t5vc2.py fontData/kafka.data x.out
+	python t.py fontData/kafka.data x.out
 
 step3:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorTmp/tensorOutput.txt -t \
@@ -783,20 +783,20 @@ s1:
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \x.out
 
 s2:
-	python t5vc2.py fontData/kafka.data x.out
+	python t5.py fontData/kafka.data x.out
 
 s3:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorTmp/tensorOutput.txt -t \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorOutput.txt -t \
 	testtifs/kafka/xaaz.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
 
 step3-i:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -I tensorTmp/tensorOutput.txt \
-	testtifs/kafka/xaaa.tif
+	$(OCR) -f fontData/kafka.data $(KAFKA) -I tensorOutput.txt \
+	testtifs/kafka/xaa*.tif
 
 
 step2b:
-	python t5.py fontData/bashevis.data bashevis.out
+	python t.py fontData/bashevis.data bashevis.out
 
 testa:
 	$(OCR) -f fontData/kafka.data $(KAFKA) -T -t \
@@ -814,9 +814,9 @@ testab:
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl > \xab.out
 
 t2:
-	python t5.py fontData/kafka.data xab.out
+	python t.py fontData/kafka.data xab.out
 
 t3:
-	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorTmp/tensorOutput.txt -t \
+	$(OCR) -f fontData/kafka.data $(KAFKA) -P tensorOutput.txt -t \
 	testtifs/kafka/meow*.tif | \
 		../fixutf8.pl | ./fixSholem.pl | ../fixspell.pl
