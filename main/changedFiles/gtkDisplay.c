@@ -193,9 +193,9 @@ void showText() { // called from a button; ignore any parameters
 	} // one line
 } // showText
 
-void showTensorFlow() { // called from a button; ignore any parameters
+//void showTensorFlow() { // called from a button; ignore any parameters
 	//TBD
-} // show Text in Tensor Flow Mode
+//} // show Text in Tensor Flow Mode
 
 // collect the OCR values of the text, but not using more than lengthAvailable.
 // Return how many characters were filled.
@@ -609,11 +609,11 @@ void GUI(int col) {
 			gtk_layout_put(infoLayout, writeTemplateButton, 500, 90);
 			g_signal_connect(GTK_OBJECT(writeTemplateButton), "clicked",
 				G_CALLBACK(writeTemplate), NULL);
-			GtkWidget *tensorFlowButton =
-				gtk_button_new_with_label("TensorFlow");
-			gtk_layout_put(infoLayout, tensorFlowButton, 500, 150);
-			g_signal_connect(GTK_OBJECT(tensorFlowButton), "clicked",
-				G_CALLBACK(showTensorFlow), NULL);
+			//GtkWidget *tensorFlowButton =
+			//	gtk_button_new_with_label("TensorFlow");
+			//gtk_layout_put(infoLayout, tensorFlowButton, 500, 150);
+			//g_signal_connect(GTK_OBJECT(tensorFlowButton), "clicked",
+			//	G_CALLBACK(showTensorFlow), NULL);
 		} // buttons
 		// ocr-processed text: textView
 		if (firstDisplay) {
